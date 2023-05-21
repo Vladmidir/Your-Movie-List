@@ -6,7 +6,7 @@ function List() {
 
     const [items, setItems] = React.useState(["dummy 1", "dummy 2"])
 
-    //make sure to pass empty array, to prevent infinite fetching.
+    //make sure to pass empty dependency array, to prevent infinite fetching.
     React.useEffect(() => {
       fetch('/api/list').then((res) => res.json()).then((fetched_data) => {
         console.log(Object.values(fetched_data))

@@ -72,5 +72,8 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "axios": "^1.4.0"
+  }
 }

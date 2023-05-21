@@ -14,6 +14,9 @@
   "node": "your-node-version"
 })
 ```
+- Remember to secure the Secret Key for the API in an environment file. [Here is a guide](https://medium.com/hackernoon/how-to-use-environment-variables-keep-your-secret-keys-safe-secure-8b1a7877d69c)
+
+
 ### Routing notes
 - React Router `<Switch>` tag is different from `<Route>` tag in a way that `<Switch>` renders *exclusively*, where `<Route>` renders *inclusively*.[More on Switch](https://v5.reactrouter.com/web/api/Switch)
 - I may need to use `<createBrowswerRouter>` instead of `<BrowserRouter>` to work with APIs.
@@ -34,12 +37,10 @@
 
 
 ### Do next 
-- Code the tempates (Layout, Home, List)
-- Routes are not working (Shows empty pages). FIX THIS.
-- [Read this](https://reactrouter.com/en/main/guides/ssr)
-- Set up routes. Set up the server API.
-- Sign up for Insomnia.
-- Hook up the external API to the server.
+- [Read about Node.js](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/Introduction) 
+- [Read about using APIs with Node.js](https://rapidapi.com/blog/how-to-use-an-api-with-node-js/)
+- Finishe setting up the server API.
+
 
 
 ### Server index.js commented
@@ -73,3 +74,16 @@ app.listen(PORT, () => {
     console.log(`Server Listening on ${PORT}`)
 })
 ```
+
+
+
+### Usefull articles
+- [React Router with Express](https://dev.to/nburgess/creating-a-react-app-with-react-router-and-an-express-backend-33l3)
+- [React with Express (Typescript)](https://medium.com/bb-tutorials-and-thoughts/how-to-develop-and-build-react-app-with-nodejs-backend-typescript-version-27a6a283a7c5)
+
+### Frontend ideas
+- Arrange movies in user's list using drag and drop
+- add cool animations to the homepage (movies flying in the background)
+
+### Backend ideas
+- All the user to email their movies list to themselves.
