@@ -1,9 +1,19 @@
 
+## Structure
+- When clicking on a movie preview, the user opens the Movie's Page
+- Client makes a GET request to api/movie/:id
+- The server looks up the id in the local database and returns the json() response.
+- IF the id is NOT in the database, the server makes a request to RapidAPI and directs the reponse to the client.
+- When the client add a movie (from the Movie's page), a POST request in being sent to /api/movie/:id (I guess provide movie's details here, so we don't have to make another request to the RapidAPI. If we need to make another request, no biggie.)
+- How do I provide custom paramaters in the HTML form, without making dummy inputs?
+- When the client edits a movie (in their list) a PUT request is being sent to /api/movie/:id.
+- When the client deletes a movie a DELETE request is being sent to /api/movie/:id
+
 ## Notes
 
 ### General notes:
 - App routing takes the following form `app.METHOD(PATH, HANDLER)
-
+- IMPORTANT: I did not install some packages as `dev` and installed them forever (eg, sequelize-cli). Make sure this is not an issue.
 ### Setup notes
 - [followed this tutorial](https://www.freecodecamp.org/news/how-to-create-a-react-app-with-a-node-backend-the-complete-guide/)
 - add a proxy path to our React package.json, so to not have to provide the origin on every request. `"proxy" : "http://localhost:8080"`
@@ -37,9 +47,12 @@
 
 
 ### Do next 
-- [Read about Node.js](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/Introduction) 
-- [Read about using APIs with Node.js](https://rapidapi.com/blog/how-to-use-an-api-with-node-js/)
-- Finishe setting up the server API.
+- Learn how to connect models to the server from a separate file.
+- Configure the projet properly. Add a rotues file. Export teh db properly.
+- Plan out the server API.
+- Implement and test the API.
+- Connect the API to the database.
+- Start writing front-end for the API.
 
 
 
@@ -80,6 +93,7 @@ app.listen(PORT, () => {
 ### Usefull articles
 - [React Router with Express](https://dev.to/nburgess/creating-a-react-app-with-react-router-and-an-express-backend-33l3)
 - [React with Express (Typescript)](https://medium.com/bb-tutorials-and-thoughts/how-to-develop-and-build-react-app-with-nodejs-backend-typescript-version-27a6a283a7c5)
+- [Node js with Sequelize](https://www.bezkoder.com/node-js-express-sequelize-mysql/)
 
 ### Frontend ideas
 - Arrange movies in user's list using drag and drop
