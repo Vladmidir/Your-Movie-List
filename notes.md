@@ -101,3 +101,15 @@ app.listen(PORT, () => {
 
 ### Backend ideas
 - All the user to email their movies list to themselves.
+
+### Comments from Movie.js. Read & refactor these later
+    //if a movie is local, show the edit & delete buttons. Delete sends DELETE request.
+    //edit button toggles the 'editing' state. If we are editing, hide description and show editing form instead.
+    // if not editing, show description and hide the editing form.
+    //if the movie is NOT local, show the 'addForm'
+
+    //edit form should turn desription into an editable text field. Rerender on button click.
+    //Make something like const [editing, setEditing] = UseState(false).
+    //Show the form only when clicked the editing button (make it a button yes)
+    //Editing form should have a text field with editable description, ?custom rating (later)?,
+    //followed by <button method="PUT">save changes</button> and <button redirectBack >cancel</button>

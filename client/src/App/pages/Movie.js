@@ -1,5 +1,5 @@
 import { React, useEffect, useState, useRef} from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 
 /**
@@ -17,7 +17,7 @@ export default function Movie() {
     //May want to useRef, since this value will not be changing on rerenders
     const [movie, setMovie] = useState({imdb_id: "", title: "", description: "", local: false})
     const [editing, setEditing] = useState(false)
-    const [rerender, doRederender] = useState(false)
+    const [rerender, doRerender] = useState(false)
     const newDescription = useRef("")
 
     //fetch the info from the API based on the ID. 
@@ -51,21 +51,15 @@ export default function Movie() {
     }
 
     async function deleteMovie() {
-        await fetch("/api/movie/" + movie.imdb_id, { method: "delete" });
+        await fetch("/api/movie/" + movie.imdb_id, { method: "delete" }).then((res) => res.json()).then((data) => {
+            setMovie(data)
+            newDescription.current = data.description
+            console.log(data)
+            doRerender(!rerender)
+        })
     }
 
-    //if a movie is local, show the edit & delete buttons. Delete sends DELETE request.
-    //edit button toggles the 'editing' state. If we are editing, hide description and show editing form instead.
-    // if not editing, show description and hide the editing form.
-    //if the movie is NOT local, show the 'addForm'
-
-    //edit form should turn desription into an editable text field. Rerender on button click.
-    //Make something like const [editing, setEditing] = UseState(false).
-    //Show the form only when clicked the editing button (make it a button yes)
-    //Editing form should have a text field with editable description, ?custom rating (later)?,
-    //followed by <button method="PUT">save changes</button> and <button redirectBack >cancel</button>
-
-    
+    //add button that send a POST request with movie's data to the server
     const addForm = (
         <form action='/api/movie' method='POST' >
             <input className='hidden-input' name='imdb_id' type='string' value={ movie.imdb_id } readOnly/>
@@ -75,6 +69,7 @@ export default function Movie() {
             <button >add</button>
         </form>)
 
+    //form for editing the movie description
     const editForm = (
         <form onSubmit={(e) => { e.preventDefault(); putMovie(); setEditing(false) }}>
             <input className='hidden-input' name='imdb_id' type='string' value={ movie.imdb_id } readOnly />
@@ -90,9 +85,8 @@ export default function Movie() {
     //we call setEditing to cause a rerender
     const localButtons = (
         <div>
-            <button onClick={ setEditing } >edit</button>
-            <button onClick={ () => { deleteMovie(); doRederender(!rerender) }} >delete</button>
-            
+            <button onClick={ setEditing }>edit</button>
+            <button onClick={ () => { deleteMovie();}}>delete</button>
         </div>
     )
 
