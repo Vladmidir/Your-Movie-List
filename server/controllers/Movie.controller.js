@@ -143,9 +143,6 @@ exports.delete = async (req, res) => {
 };
 
 
-
-
-
 // Delete all Movies from the database.
 exports.deleteAll = (req, res) => {
   

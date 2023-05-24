@@ -1,24 +1,15 @@
 import { React, useEffect, useState, useRef} from 'react';
 import { useParams } from 'react-router-dom';
 
-
-/**
- * Request the server for data: GET("api/movie/:id")
- * Process the json response and display the custom page with the data
- */
-
-
 export default function Movie() {
 
     //get the id from the url parameters
     let { id } = useParams()
-    
 
-    //May want to useRef, since this value will not be changing on rerenders
-    const [movie, setMovie] = useState({imdb_id: "", title: "", description: "", local: false})
-    const [editing, setEditing] = useState(false)
-    const [rerender, doRerender] = useState(false)
-    const newDescription = useRef("")
+    const [movie, setMovie] = useState({imdb_id: "", title: "", description: "", local: false}) //data about the movie.
+    const [editing, setEditing] = useState(false) //whether the movie data is currently being edited.
+    const [rerender, doRerender] = useState(false) //simply rerenders the page.
+    const newDescription = useRef("") //I am not sure if I actually need this. Easier so I dont have to setMovie every time.
 
     //fetch the info from the API based on the ID. 
     useEffect(() => {
@@ -26,10 +17,11 @@ export default function Movie() {
             setMovie(data)
             newDescription.current = data.description
         })
-    }, [id, editing, rerender])
-    //I have to rerender data every time editing occurs, how do the dependencies work again?
+    }, [id, editing])
 
-
+    /**
+     * PUT 
+     */
     async function putMovie() {
         const movieData = {
             imdb_id: movie.imdb_id,
@@ -59,7 +51,7 @@ export default function Movie() {
         })
     }
 
-    //add button that send a POST request with movie's data to the server
+    // "add" button that sends a POST request with movie's data to the server, adding it to the database (user's list in the future.)
     const addForm = (
         <form action='/api/movie' method='POST' >
             <input className='hidden-input' name='imdb_id' type='string' value={ movie.imdb_id } readOnly/>
@@ -82,7 +74,7 @@ export default function Movie() {
         </form>
     )
     
-    //we call setEditing to cause a rerender
+    //Buttons to display for when the movie is local (added to the list)
     const localButtons = (
         <div>
             <button onClick={ setEditing }>edit</button>
@@ -90,7 +82,6 @@ export default function Movie() {
         </div>
     )
 
-    //form that adds the movie to the database. 
     //Good idea to check whether the movie is in the database and display the according form (add vs edit & delete)
     return (
         <div className='movie'>
