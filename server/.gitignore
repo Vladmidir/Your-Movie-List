@@ -1,2 +1,3 @@
 /app-env
+/.env
 /server/database/database.sqlite

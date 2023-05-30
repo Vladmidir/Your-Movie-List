@@ -1,5 +1,4 @@
 //Here we define functions for interacting with the database.
-//Interact with RapidAPI in the server/index.js. Here we will only interact with the local database.
 
 const db = require("../database/index");
 const Movie = db.Movie;
@@ -53,6 +52,7 @@ exports.findTop50 = async (req, res) => {
       //send the response from external API
       res.send(response.data)
   } catch (error) {
+      options.url = BASE_URL
       console.error(error);
   }
   //reset the url back to default
@@ -68,8 +68,7 @@ exports.create = (req, res) => {
     });
     return;
   }
-
-  // Create a Movie
+  // Create a Movie. Would have to add UserId here. (Notice that the movie id is added automatically)
   const newMovie = {
     title: req.body.title,
     description: req.body.description,
@@ -80,7 +79,7 @@ exports.create = (req, res) => {
   Movie.create(newMovie)
     .then(data => {
       //redirect back to the Movie's page
-      res.status(200).redirect("../movie/" + newMovie.imdb_id);
+      res.status(200).redirect("../movie/" + data.id);
     })
     .catch(err => {
       res.status(500).send({
@@ -99,7 +98,12 @@ exports.findAll = async (req, res) => {
 exports.findOne = async (req, res) => {
   movie_id = req.params.id
   //have to check if it is in the database, if not request the RapidAPI
-  movieLocal = await Movie.findByPk(movie_id)
+  movieLocal = await Movie.findAll({
+    where: {
+      id: movie_id,
+      UserId: req.session.id //would have to access user id from passport here
+    }
+  })
   //if found a movie in local db, return that
   if(movieLocal != null){
     //Set local to true
@@ -117,7 +121,7 @@ exports.update = async (req, res) => {
   try {
     Movie.update({ description: req.body.description }, {
       where: {
-        imdb_id: req.body.imdb_id
+        id: req.body.id //THIS MAY CAUSE BUGS. MAKE SURE TO PASS THE ID PROPERTY
       }
     });
     res.status(200).send()
@@ -133,7 +137,7 @@ exports.delete = async (req, res) => {
   const movie_id = req.params.id
   await Movie.destroy({
     where: {
-      imdb_id: movie_id
+      id: movie_id
     }
   });
 

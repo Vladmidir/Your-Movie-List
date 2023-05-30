@@ -6,7 +6,13 @@ export default function Movie() {
     //get the id from the url parameters
     let { id } = useParams()
 
-    const [movie, setMovie] = useState({imdb_id: "", title: "", description: "", local: false}) //data about the movie.
+    const [movie, setMovie] = useState({//data about the movie.
+        id: "", 
+        imdb_id: "", 
+        title: "", 
+        description: "", 
+        UserId: "",  
+        local: false}) 
     const [editing, setEditing] = useState(false) //whether the movie data is currently being edited.
     const [rerender, doRerender] = useState(false) //simply rerenders the page.
     const newDescription = useRef("") //I am not sure if I actually need this. Easier so I dont have to setMovie every time.
@@ -24,12 +30,13 @@ export default function Movie() {
      */
     async function putMovie() {
         const movieData = {
+            id: movie.id,
             imdb_id: movie.imdb_id,
             title: movie.title,
             description: newDescription.current
         }
         try {
-            await fetch('/api/movie/' + movieData.imdb_id, {
+            await fetch('/api/movie/' + movieData.id, {
                 method: "put",
                 headers: {
                   "Content-Type": "application/json"
@@ -43,7 +50,7 @@ export default function Movie() {
     }
 
     async function deleteMovie() {
-        await fetch("/api/movie/" + movie.imdb_id, { method: "delete" }).then((res) => res.json()).then((data) => {
+        await fetch("/api/movie/" + movie.id, { method: "delete" }).then((res) => res.json()).then((data) => {
             setMovie(data)
             newDescription.current = data.description
             console.log(data)
@@ -64,6 +71,7 @@ export default function Movie() {
     //form for editing the movie description
     const editForm = (
         <form onSubmit={(e) => { e.preventDefault(); putMovie(); setEditing(false) }}>
+            <input className='hidden-input' name='id' type='string' value={ movie.id } readOnly/>
             <input className='hidden-input' name='imdb_id' type='string' value={ movie.imdb_id } readOnly />
             <input className='hidden-input' name='title' type='string' value={ movie.title } readOnly />
             <textarea defaultValue={newDescription.current} name='description' type='textarea' onChange={(e) => {newDescription.current = e.target.value}} >

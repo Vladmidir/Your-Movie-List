@@ -10,10 +10,8 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true
         },
         //use imdb_id as a unique identifier
-        //rename to id and force the table
         imdb_id: {
             type: Sequelize.STRING,
-            primaryKey: true
         }
     }, {
         //other model options go here. For exapmple we could stop auto-pluralization with `freezeTableName: true`.

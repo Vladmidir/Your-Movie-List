@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import MoviePreview from '../MoviePreview'
+import MoviePreview from '../elemets/MoviePreview'
 
 export default function Home() {
 
