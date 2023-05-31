@@ -1,34 +1,38 @@
 const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require("bcrypt")
 
-
 function initialize(passport, getUserByName, getUserById){
-    //middleware function. Call done() to move on!
-    const authenticateUser = async (name, password, done) => {
+    //middleware function. Call cb() to move on!
+    const authenticateUser = async (name, password, cb) => {
         const user = await getUserByName(name) //have to await this
+
 
         if (user == null) {
             //null - no error. false - no user found. message - our 'error' message
-            return done(null, false, {message: "no user with that name"})
+            return cb(null, false, {message: "no user with that name"})
         }
 
         try {
 
             if (await bcrypt.compare(password, user.password)){
-                return done(null, user)
+                return cb(null, {id: user.id, name: user.name})
             }else {
-                return done(null, false, {message: "password incorrect"})
+                return cb(null, false, {message: "password incorrect"})
             }
         } catch (e) {
-            return done(e)
+            return cb(e)
         }
     }
 
     //tell it to use "name" as the default username field
     passport.use(new LocalStrategy({usernameField: "name"}, authenticateUser))
 
-    passport.serializeUser((user, done) => done(null, user.id)) //save the user id to the session. IMPORTANT
-    passport.deserializeUser((id, done) => done(null, getUserById(id))
+    passport.serializeUser((user, cb) => {
+        process.nextTick( () => {
+            return cb(null, {id: user.id, name: user.name})
+        })
+    }) //save the user id to the session. IMPORTANT
+    passport.deserializeUser(async (user, cb) => cb(null, (await getUserById(user.id)))//REMEBER TO AWAIT
 )
 }
 

@@ -86,12 +86,13 @@ app.delete("/api/login", (req, res) => {
     });
 });
 
-app.get("/api/authenticated", (req, res) => {
+app.get("/api/authenticated", async (req, res) => {
   if(req.isAuthenticated()) {
-    return res.status(200).send(true)
+    return res.status(200).send({id: req.user.id, name: req.user.name})
   }
   return res.status(401).send(false)
 })
+
 
 //set up the routes for Movies. Make sure the request is authenticated.
 const movies = require("./routes/Movie.router.js")

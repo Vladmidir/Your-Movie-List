@@ -49,8 +49,23 @@
 
 
 # Do next 
-- Set up the passport-local correctly.
-- Register page is not updating the database
+- Refactor the routes.
+- Display error message for invalid password/username entries. **May30**
+- debug the authentication system. **May30**
+- How do I access session data about the user? (I will need userID and the rest of the user parameters) **May30**
+ 1. Can use fetch and make a server route that returns data about the logged in user. 
+ 2. Fetch in the browserRouter and pass user data as props to all client routes??? BEST IDEA SO FAR.
+- Refactor the movie's API, with the consideratoin of the User that is logged in. **May30 & May31**
+- Add the search bar for the RapidAPI database (In the layout). **May31**
+- allow the user to view their movie list.**May31**
+- allow the user to sort their movie list (date added, date modified, rating)**May31**
+- add movie banners and thumbnails (refactor the database table). **June1 || June2**
+- Show whether the movie is "saved" in the MoviePreview element. (seach the database for each movie that is being displayed 
+Movie.findOne({where: {imdb_id = movie.imdb_id, UserId = user.id}})) **June1 || June2** //one user does NOT have 2 same *imdb_id*'s 
+- Add and delete movies through MoviePreview. **June2 (Optional)**
+- MoviePreview accordion description. **June2 (optional)**
+
+
 
 
 ### Usefull articles

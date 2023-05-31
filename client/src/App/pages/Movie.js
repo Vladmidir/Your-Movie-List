@@ -36,7 +36,7 @@ export default function Movie() {
             description: newDescription.current
         }
         try {
-            await fetch('/api/movie/' + movieData.id, {
+            await fetch('/api/movie/' + movieData.imdb_id, {
                 method: "put",
                 headers: {
                   "Content-Type": "application/json"
@@ -50,7 +50,7 @@ export default function Movie() {
     }
 
     async function deleteMovie() {
-        await fetch("/api/movie/" + movie.id, { method: "delete" }).then((res) => res.json()).then((data) => {
+        await fetch("/api/movie/" + movie.imdb_id, { method: "delete" }).then((res) => res.json()).then((data) => {
             setMovie(data)
             newDescription.current = data.description
             console.log(data)

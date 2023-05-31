@@ -72,14 +72,15 @@ exports.create = (req, res) => {
   const newMovie = {
     title: req.body.title,
     description: req.body.description,
-    imdb_id: req.body.imdb_id
+    imdb_id: req.body.imdb_id,
+    UserId: req.user.id
   };
 
   // Save Movie in the database
   Movie.create(newMovie)
     .then(data => {
       //redirect back to the Movie's page
-      res.status(200).redirect("../movie/" + data.id);
+      res.status(200).redirect("../movie/" + data.imdb_id);
     })
     .catch(err => {
       res.status(500).send({
@@ -91,17 +92,17 @@ exports.create = (req, res) => {
 
 // Retrieve all Movies from the database.
 exports.findAll = async (req, res) => {
-  res.send(await Movie.findAll())
+  res.send(await Movie.findAll({where: {UserId: req.user.id}}))
 };
 
 // Find a single Movie with an id as a parameter
 exports.findOne = async (req, res) => {
   movie_id = req.params.id
   //have to check if it is in the database, if not request the RapidAPI
-  movieLocal = await Movie.findAll({
+  movieLocal = await Movie.findOne({
     where: {
-      id: movie_id,
-      UserId: req.session.id //would have to access user id from passport here
+      imdb_id: movie_id,
+      UserId: req.user.id
     }
   })
   //if found a movie in local db, return that
@@ -121,7 +122,8 @@ exports.update = async (req, res) => {
   try {
     Movie.update({ description: req.body.description }, {
       where: {
-        id: req.body.id //THIS MAY CAUSE BUGS. MAKE SURE TO PASS THE ID PROPERTY
+        UserId: req.user.id,
+        imdb_id: req.body.imdb_id //THIS MAY CAUSE BUGS. MAKE SURE TO PASS THE ID PROPERTY
       }
     });
     res.status(200).send()
@@ -137,6 +139,7 @@ exports.delete = async (req, res) => {
   const movie_id = req.params.id
   await Movie.destroy({
     where: {
+      UserId: req.user.id,
       id: movie_id
     }
   });

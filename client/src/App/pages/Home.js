@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import MoviePreview from '../elemets/MoviePreview'
 
-export default function Home() {
+export default function Home({user}) {
 
     const [top50, setTop50] = useState([])
     
@@ -11,10 +11,10 @@ export default function Home() {
         })
     }, [])
 
-
+    console.log(user)
     return (
         <div className='Home'>
-            <h1>Welcome Home</h1>
+            <h1>Welcome Home, {user.name} !</h1>
             <div>
                 <h2>Top 50 Movies</h2>
                 <ol>
