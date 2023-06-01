@@ -3,6 +3,7 @@ const express = require("express")
 const bcrypt = require("bcrypt")
 const passport = require("passport")
 const session = require("express-session")
+//const flash = require("express-flash") UNINSTALL
 const PORT = process.env.PORT || 8080
 
 
@@ -34,12 +35,13 @@ initializePassport(
     async id => await User.findByPk(id))
 
 app.use(session({ 
-    secret: "123", //configure this properly with .env!
+    secret: "123", //CONFIGURE THIS PROPERLY with .env!
     resave: false,
     saveUninitialized: false
 }))
 app.use(passport.initialize())
 app.use(passport.session()) //this works WITH the express-session
+//app.use(flash())
 
 //for development only!
 app.get('/users', async (req, res) => {
@@ -47,7 +49,7 @@ app.get('/users', async (req, res) => {
 })
 
 //Resiter a user
-app.post("/api/register", async (req, res) => {
+app.post("/api/register", checkNotAuthenticated ,async (req, res) => {
   //check that the username is not taken
 
   user = await User.findOne({where: {name: req.body.name}})
@@ -55,7 +57,7 @@ app.post("/api/register", async (req, res) => {
   if (user != null ){
       //user already exists
       //WE WANT TO FLASH ERROR HERE. HOW DO I DO THAT? URL PARAMS?
-      return res.status(409).redirect("/register")
+      return res.status(409).send({message: "username already exists"})
   }
 
   HashedPass = await bcrypt.hash(req.body.password, 10)
@@ -67,17 +69,16 @@ app.post("/api/register", async (req, res) => {
 
   await User.create(user)
 
-  res.status(201).redirect('/login')
+  return res.status(201).send()
 })
 
-//Login the user
-app.post("/api/login", passport.authenticate('local', {
+//Login the user. With middleware to send error messages
+app.post("/api/login", checkNotAuthenticated ,passport.authenticate('local', {
   successRedirect: '/',
-  failureRedirect: '/api/login'
 }))
 
 //Logout the user 
-app.delete("/api/login", (req, res) => {
+app.post("/api/logout", checkAuthenticated,(req, res) => {
   req.logout(function(err) { //the logout function is now async!
       if (err) { 
           res.send(err)
@@ -92,7 +93,6 @@ app.get("/api/authenticated", async (req, res) => {
   }
   return res.status(401).send(false)
 })
-
 
 //set up the routes for Movies. Make sure the request is authenticated.
 const movies = require("./routes/Movie.router.js")

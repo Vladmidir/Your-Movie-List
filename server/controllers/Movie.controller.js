@@ -59,6 +59,25 @@ exports.findTop50 = async (req, res) => {
   options.url = BASE_URL
 }
 
+exports.search = async (req, res) => {
+  //set up a custom url for the API
+  const url = "imdb_id/byTitle/" + req.query.title
+  options.url += url
+
+  //fetch the data
+  try {
+      const response = await axios.request(options);
+      //send the response from external API
+      console.log(response.data.results)
+      res.send(response.data.results)
+  } catch (error) {
+      options.url = BASE_URL
+      console.error(error);
+  }
+  //reset the url back to default
+  options.url = BASE_URL
+}
+
 // Create and Save a new Movie
 exports.create = (req, res) => {
    // Validate request
@@ -140,7 +159,7 @@ exports.delete = async (req, res) => {
   await Movie.destroy({
     where: {
       UserId: req.user.id,
-      id: movie_id
+      imdb_id: movie_id
     }
   });
 

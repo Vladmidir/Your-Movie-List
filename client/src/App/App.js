@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import Layout from './pages/Layout'
 import List from './pages/List'
 import Movie from './pages/Movie'
+import Search from './pages/Search'
 import Login from './pages/Login'
 import Register from './pages/Register'
 
@@ -28,6 +29,19 @@ function App() {
     
   }
 
+  /**
+   * Redirect to homepage if authenticated tries to login/register
+   */
+  async function checkNotAuth() {
+    const authenticated =  await fetch('/api/authenticated', {credentials: 'include'})
+
+    if (authenticated.status === 200) {
+      return redirect("/")
+    }
+      return null
+    
+  }
+
   //add `errorElement: <ErrorPage />` to each route
   const router = createBrowserRouter([
     {
@@ -44,6 +58,10 @@ function App() {
           element: <Movie />
         },
         {
+          path: 'movie/search',
+          element: <Search />
+        },
+        {
           path: "list",
           element: <List />
         }
@@ -51,10 +69,12 @@ function App() {
     },
     {
       path: "/login",
+      loader: checkNotAuth,
       element: <Login />
     },
     {
       path: "/register",
+      loader: checkNotAuth,
       element: <Register />
     }
   ])

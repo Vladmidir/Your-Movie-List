@@ -26,7 +26,6 @@
 ```
 - Remember to secure the Secret Key for the API in an environment file. [Here is a guide](https://medium.com/hackernoon/how-to-use-environment-variables-keep-your-secret-keys-safe-secure-8b1a7877d69c)
 
-
 ### Routing notes
 - React Router `<Switch>` tag is different from `<Route>` tag in a way that `<Switch>` renders *exclusively*, where `<Route>` renders *inclusively*.[More on Switch](https://v5.reactrouter.com/web/api/Switch)
 - I may need to use `<createBrowswerRouter>` instead of `<BrowserRouter>` to work with APIs.
@@ -49,15 +48,18 @@
 
 
 # Do next 
-- Refactor the routes.
-- Display error message for invalid password/username entries. **May30**
-- debug the authentication system. **May30**
-- How do I access session data about the user? (I will need userID and the rest of the user parameters) **May30**
+- <s>Display error message for invalid password/username entries. **May31**
+  - Set up login error messages using [this tutorial](https://www.freecodecamp.org/news/react-passport-authentication/) **UNDER THE RUG**</s>
+- <s>debug the authentication system. **May31**
+  - Hide login/register if not logged in
+  - Allow the user to logout</s>
+  - <s>Make sure the user with the same username can not be registered twice.</s>
+- <s>How do I access session data about the user? (I will need userID and the rest of the user parameters) **May30**
  1. Can use fetch and make a server route that returns data about the logged in user. 
- 2. Fetch in the browserRouter and pass user data as props to all client routes??? BEST IDEA SO FAR.
-- Refactor the movie's API, with the consideratoin of the User that is logged in. **May30 & May31**
-- Add the search bar for the RapidAPI database (In the layout). **May31**
-- allow the user to view their movie list.**May31**
+ 2. Fetch in the browserRouter and pass user data as props to all client routes??? BEST IDEA SO FAR.</s>
+- <s>Refactor the movie's API, with the consideratoin of the User that is logged in. **May30 & May31**</s>
+- <s>Add the search bar for the RapidAPI database (In the layout). **May31**</s>
+- <s>allow the user to view their movie list.**May31**</s>
 - allow the user to sort their movie list (date added, date modified, rating)**May31**
 - add movie banners and thumbnails (refactor the database table). **June1 || June2**
 - Show whether the movie is "saved" in the MoviePreview element. (seach the database for each movie that is being displayed 

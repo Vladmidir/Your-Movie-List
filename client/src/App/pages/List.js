@@ -1,16 +1,17 @@
 import React from 'react';
-
+import MoviePreview from '../elemets/MoviePreview';
 
 function List() {
 
 
-    const [items, setItems] = React.useState(["dummy 1", "dummy 2"])
+    const [movies, setMovies] = React.useState([]) //useMemo instead?
 
-    //make sure to pass empty dependency array, to prevent infinite fetching.
+
+    //get all movies saved by the user.
     React.useEffect(() => {
-      fetch('/api/list').then((res) => res.json()).then((fetched_data) => {
-        console.log(Object.values(fetched_data))
-        setItems(Object.values(fetched_data))
+      fetch('/api/movie').then((res) => res.json()).then((fetched_data) => {
+        console.log(fetched_data)
+        setMovies(fetched_data)
         })
     }, [])
 
@@ -18,10 +19,12 @@ function List() {
 
     return (
         <div className='list'>
-            <h3>Rendered</h3>
+            <h1>Your movie list</h1>
             <ol>
-                {items.map((item, index) => {
-                    return <li key={index}>{item}</li>
+                {movies.map((movie, index) => {
+                    return <li key={index}>
+                        <MoviePreview title={movie.title} id={movie.imdb_id}/>
+                    </li>
                 })}
             </ol>
         </div>

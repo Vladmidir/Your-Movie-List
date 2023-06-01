@@ -4,6 +4,8 @@ const router = require("express").Router()
 //Return top 50 Movies from MoviesMiniDatabase. Has to be on top, so it does not trigger an id route.
 router.get("/top50", Movies.findTop50)
 
+router.get("/search", Movies.search)
+
 //Get all movies in the LOCAL database
 router.get("/", Movies.findAll)
 

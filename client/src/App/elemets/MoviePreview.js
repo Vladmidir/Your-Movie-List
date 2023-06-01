@@ -9,7 +9,7 @@ export default function MoviePreview({title, id}) {
 
     return (
         <div className='movie-preview'>
-            <Link to={'movie/' + id}><h5>{ title }</h5></Link>
+            <Link to={'/movie/' + id}><h5>{ title }</h5></Link>
         </div>
     )
 }
