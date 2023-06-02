@@ -13,7 +13,6 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
         },
         rating: Sequelize.FLOAT,
-        thumbnail: Sequelize.STRING,
         banner: Sequelize.STRING
     }, {
         //other model options go here. For exapmple we could stop auto-pluralization with `freezeTableName: true`.

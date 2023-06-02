@@ -13,11 +13,9 @@ export default function Search({user}) {
     }
 
     let query = useQuery(); //this returns a meme (the value is saved between rerenders)
-    console.log(query)
     React.useEffect(() => {
         fetch('/api/movie/search?' + query).then((res) => res.json()).then(async (data) => {
-            console.log(await data)
-            setResults((await data).map((movie) => ( {title: movie.title, imdb_id: movie.imdb_id })))
+            setResults(data)
         })
     }, [query]) 
 

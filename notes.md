@@ -62,11 +62,16 @@
 - <s>allow the user to view their movie list.**May31**</s>
 - <s>allow the user to sort their movie list (date added, date modified, rating)**May31**</s>
 - <s>add movie banners and thumbnails (refactor the database table). **June1 || June2**</s>
-- Show whether the movie is "saved" in the MoviePreview element. (seach the database for each movie that is being displayed 
-Movie.findOne({where: {imdb_id = movie.imdb_id, UserId = user.id}})) **June1 || June2**
-- Add and delete movies through MoviePreview. **June2 (Optional)**
-- MoviePreview accordion description. **June2 (optional)**
+- Show whether the movie is "saved" in the MoviePreview element. <mark>Not gonna work because of the MovieMiniDatabase API </mark>**June1 || June2**
+- Add and delete movies through MoviePreview. <mark>Not gonna work because of the MovieMiniDatabase API </mark>**June2 (Optional)**
+- MoviePreview accordion description. <mark>Not gonna work because of the MovieMiniDatabase API </mark>**June2 (optional)**
 
+## Future plans
+- Make more efficient (useMemo instead of useState. Less unnecessary API calls)
+- Add styles, make it look pretty.
+- Add drag and drop (dnd delete, save movies to the list. Drag to trashcan or list icon). DND sorting? Order in the list property?
+- Make it responsive.
+- refactor to use better API. [Greater movies database](https://rapidapi.com/SAdrian/api/MoviesDatabase/)
 
 
 

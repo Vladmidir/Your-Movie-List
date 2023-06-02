@@ -6,7 +6,7 @@ export default function Home({user}) {
     const [top50, setTop50] = useState([]) //useMemo instead of state?  
     
     React.useEffect(() => {
-        fetch('/api/movie/top50').then((res) => {console.log(res);return res.json()}).then((data) => {
+        fetch('/api/movie/top50').then((res) => {console.log(res);return res.json()}).then(async (data) => {
             setTop50(data)
         })
     }, [])

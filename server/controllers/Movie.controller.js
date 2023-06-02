@@ -5,38 +5,41 @@ const Movie = db.Movie;
 const Op = db.Sequelize.Op;
 
 const axios = require('axios');
+const MovieModel = require("../models/Movie.model");
 
 //Set up for the external API 
-const BASE_URL = 'https://moviesminidatabase.p.rapidapi.com/movie/'
+const BASE_URL = 'https://moviesdatabase.p.rapidapi.com/'
 const options = {
   method: 'GET',
   url: BASE_URL,
+  params: {
+    info: "base_info" //always get the base info by default
+  },
   headers: {
     'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
-    'X-RapidAPI-Host': 'moviesminidatabase.p.rapidapi.com'
+    'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com'
   }
 };
 
-//#UTILS#
+//#EXTERNAL API INTERFACE#
 /**
  * Return the movie object with the id provided from MoviesMiniDB
  * @param {string} movie_id 
  */
-async function findOneMoviesMiniDB(movie_id) {
-  const url = "id/" + movie_id
+async function findOneMoviesMiniDB(movie_id) { //RENAME TO MOVIES RAPID
+  const url = "titles/" + movie_id
   options.url += url
 
   //fetch the data
   try {
-      const response = (await axios.request(options)).data.results;
-      //format the response from external API
-      movieExternal = {
-        imdb_id: response.imdb_id, 
-        title: response.title, 
-        description: response.description, 
-        rating: response.rating,
-        thumbnail: response.image_url,
-        banner: response.banner,
+      const results = (await axios.request(options)).data.results;
+      //format the results from external API
+      movieExternal = { 
+        imdb_id: results.id, 
+        title: results.originalTitleText.text, 
+        description: results.plot.plotText.plainText, 
+        rating: results.ratingsSummary.aggregateRating,
+        banner: results.primaryImage.url,
         local: false
       }
       options.url = BASE_URL // change the link before returning!
@@ -48,26 +51,48 @@ async function findOneMoviesMiniDB(movie_id) {
   //reset the url back to default
   options.url = BASE_URL
 }
-//#END UTILS#
+
 
 exports.findTop50 = async (req, res) => {
   //set up a custom url for the API
-  const url = "order/byPopularity/"
+  const url = "titles/"
   options.url += url
+  options.params.list = "most_pop_movies"
+  options.params.limit = "50"
 
   //fetch the data
   try {
-    //get the top 50 titles and IDs
-      const response = await axios.request(options);
-      //setup the url for fetching the rest of the data about each of the top 50
-      options.url = BASE_URL 
-      //fetch the rest of the data about the rest of the top 50
-      //I would have to also search the database :(
-
-      console.log(response.data.results)
-
+      //get the top 50 most popular movies
+      const response = (await axios.request(options)).data.results;
+      //format the data for every movie, checking the database for every movie
+      const movies = response.map(async (movie) => {
+        //try to find the movie locally
+        movieLocal = await Movie.findOne({
+          where: {
+            imdb_id: movie.id,
+            UserId: req.user.id
+          }
+        })
+        //if found a movie in local db, return that
+        if(movieLocal != null){
+          movieLocal.local = true
+          return movieLocal
+        }
+        //if not in the local, format and return the response data
+        //Send the data from MoviesDatabase
+        movieExternal = { 
+          imdb_id: movie.id, 
+          title: movie.originalTitleText.text, 
+          description: movie.plot.plotText.plainText, 
+          rating: movie.ratingsSummary.aggregateRating,
+          banner: movie.primaryImage.url,
+          local: false
+        }
+        return movieExternal
+      })
       //send the response from external API
-      res.send(response.data.results)
+      options.url = BASE_URL
+      res.json(await Promise.all(movies))
   } catch (error) {
       options.url = BASE_URL
       console.error(error);
@@ -78,14 +103,43 @@ exports.findTop50 = async (req, res) => {
 
 exports.search = async (req, res) => {
   //set up a custom url for the API
-  const url = "imdb_id/byTitle/" + req.query.title
+  const url = "titles/search/title/" + req.query.title
   options.url += url
+  options.excact = false
+  options.limit = "20"
 
   //fetch the data
   try {
-      const response = await axios.request(options);
+      const response = (await axios.request(options)).data.results;
+
+      //MAKE THIS MAP INTO A UTILITY FUNCTION
+      const movies = response.map(async (movie) => {
+        //try to find the movie locally
+        movieLocal = await Movie.findOne({
+          where: {
+            imdb_id: movie.id,
+            UserId: req.user.id
+          }
+        })
+        //if found a movie in local db, return that
+        if(movieLocal != null){
+          movieLocal.local = true
+          return movieLocal
+        }
+        //if not in the local, format and return the response data
+        //Send the data from MoviesDatabase
+        movieExternal = { 
+          imdb_id: movie.id, 
+          title: movie.originalTitleText.text, 
+          description: movie.plot.plotText.plainText, 
+          rating: movie.ratingsSummary.aggregateRating,
+          banner: movie.primaryImage.url,
+          local: false
+        }
+        return movieExternal
+      })
       //send the response from external API
-      res.send(response.data.results)
+      res.json(await Promise.all(movies))
   } catch (error) {
       options.url = BASE_URL
       console.error(error);
@@ -93,6 +147,8 @@ exports.search = async (req, res) => {
   //reset the url back to default
   options.url = BASE_URL
 }
+
+//#END EXTERNAL API INTERFACE#
 
 // Create and Save a new Movie
 exports.create = (req, res) => {
@@ -109,7 +165,6 @@ exports.create = (req, res) => {
     description: req.body.description,
     imdb_id: req.body.imdb_id,
     rating: req.body.rating,
-    thumbnail: req.body.thumbnail,
     banner: req.body.banner,
     UserId: req.user.id
   };

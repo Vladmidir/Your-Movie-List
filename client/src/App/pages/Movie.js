@@ -1,5 +1,6 @@
 import { React, useEffect, useState, useRef} from 'react';
 import { useParams } from 'react-router-dom';
+import "./Movie.css"
 
 export default function Movie() {
 
@@ -106,8 +107,8 @@ export default function Movie() {
     return (
         <div className='movie'>
             <h2>This is the page of: { movie.title }</h2>
-            {movie.banner !== '' && <img src={movie.banner} alt='movie banner'></img>}
             { movie.local && <div>In the list!</div> }
+            {movie.banner !== '' && <img className='movie-banner' src={movie.banner} alt='movie banner'></img>}
             <h4>Description:</h4> 
             
             { editing ? editForm : <p> {movie.description} </p>}
