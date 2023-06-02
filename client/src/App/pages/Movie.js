@@ -10,7 +10,10 @@ export default function Movie() {
         id: "", 
         imdb_id: "", 
         title: "", 
-        description: "", 
+        description: "",
+        rating: 0.0,
+        thumbnail: "",
+        banner: "",
         UserId: "",  
         local: false}) 
     const [editing, setEditing] = useState(false) //whether the movie data is currently being edited.
@@ -33,7 +36,10 @@ export default function Movie() {
             id: movie.id,
             imdb_id: movie.imdb_id,
             title: movie.title,
-            description: newDescription.current
+            description: newDescription.current, //pass the new description
+            rating: movie.rating,
+            thumbnail: movie.thumbnail,
+            banner: movie.banner
         }
         try {
             await fetch('/api/movie/' + movieData.imdb_id, {
@@ -53,7 +59,6 @@ export default function Movie() {
         await fetch("/api/movie/" + movie.imdb_id, { method: "delete" }).then((res) => res.json()).then((data) => {
             setMovie(data)
             newDescription.current = data.description
-            console.log(data)
             doRerender(!rerender)
         })
     }
@@ -64,6 +69,9 @@ export default function Movie() {
             <input className='hidden-input' name='imdb_id' type='string' value={ movie.imdb_id } readOnly/>
             <input className='hidden-input' name='title' type='string' value={ movie.title } readOnly/>
             <input className='hidden-input' name='description' type='text' value={ movie.description } readOnly/>
+            <input className='hidden-input' name='rating' type='number' step='0.01' value={ movie.rating } readOnly/>
+            <input className='hidden-input' name='thumbnail' type='text' value={ movie.thumbnail } readOnly/>
+            <input className='hidden-input' name='banner' type='text' value={ movie.banner } readOnly/>
 
             <button >add</button>
         </form>)
@@ -77,6 +85,9 @@ export default function Movie() {
             <textarea defaultValue={newDescription.current} name='description' type='textarea' onChange={(e) => {newDescription.current = e.target.value}} >
                 
             </textarea>
+            <input className='hidden-input' name='rating' type='number' step='0.01' value={ movie.rating } readOnly/>
+            <input className='hidden-input' name='thumbnail' type='text' value={ movie.thumbnail } readOnly/>
+            <input className='hidden-input' name='banner' type='text' value={ movie.banner } readOnly/>
             <button type='submit' >save</button>
             <button onClick={() => {setEditing(false); newDescription.current = movie.description}} >cancel</button>
         </form>
@@ -90,18 +101,17 @@ export default function Movie() {
         </div>
     )
 
-    //Good idea to check whether the movie is in the database and display the according form (add vs edit & delete)
+    //Check whether the movie is in the database and display the according form (add vs edit & delete)
     return (
         <div className='movie'>
             <h2>This is the page of: { movie.title }</h2>
             { movie.local && <div>In the list!</div> }
             <h4>Description:</h4> 
             
-                { editing ? editForm : <p> {movie.description} </p>}
+            { editing ? editForm : <p> {movie.description} </p>}
             
-
             { movie.local ?  (!editing && localButtons) : addForm}
-
+            <span>{movie.rating}</span>
         </div>
     )
 }
