@@ -67,7 +67,7 @@ function List() {
             <ol>
                 {movies.map((movie, index) => {
                     return <li key={index}>
-                        <MoviePreview title={movie.title} id={movie.imdb_id}/>
+                        <MoviePreview movie={movie}/>
                     </li>
                 })}
             </ol>

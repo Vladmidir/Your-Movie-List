@@ -6,12 +6,11 @@ export default function Home({user}) {
     const [top50, setTop50] = useState([]) //useMemo instead of state?  
     
     React.useEffect(() => {
-        fetch('/api/movie/top50').then((res) => res.json()).then((data) => {
-            setTop50(Object.values(data.results).map((movie) => ( {title: movie.title, imdb_id: movie.imdb_id })))
+        fetch('/api/movie/top50').then((res) => {console.log(res);return res.json()}).then((data) => {
+            setTop50(data)
         })
     }, [])
 
-    console.log(user)
     return (
         <div className='Home'>
             <h1>Welcome Home, {user.name} !</h1>
@@ -20,7 +19,7 @@ export default function Home({user}) {
                 <ol>
                     {top50.map((movie, index) => {
                         return <li key={index}>
-                            <MoviePreview title={movie.title} id={movie.imdb_id}/>
+                            <MoviePreview movie={movie}/>
                         </li>
                     })}
                 </ol>

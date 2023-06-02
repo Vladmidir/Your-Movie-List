@@ -60,10 +60,10 @@
 - <s>Refactor the movie's API, with the consideratoin of the User that is logged in. **May30 & May31**</s>
 - <s>Add the search bar for the RapidAPI database (In the layout). **May31**</s>
 - <s>allow the user to view their movie list.**May31**</s>
-- allow the user to sort their movie list (date added, date modified, rating)**May31**
-- add movie banners and thumbnails (refactor the database table). **June1 || June2**
+- <s>allow the user to sort their movie list (date added, date modified, rating)**May31**</s>
+- <s>add movie banners and thumbnails (refactor the database table). **June1 || June2**</s>
 - Show whether the movie is "saved" in the MoviePreview element. (seach the database for each movie that is being displayed 
-Movie.findOne({where: {imdb_id = movie.imdb_id, UserId = user.id}})) **June1 || June2** //one user does NOT have 2 same *imdb_id*'s 
+Movie.findOne({where: {imdb_id = movie.imdb_id, UserId = user.id}})) **June1 || June2**
 - Add and delete movies through MoviePreview. **June2 (Optional)**
 - MoviePreview accordion description. **June2 (optional)**
 

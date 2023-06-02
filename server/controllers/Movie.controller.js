@@ -57,9 +57,17 @@ exports.findTop50 = async (req, res) => {
 
   //fetch the data
   try {
+    //get the top 50 titles and IDs
       const response = await axios.request(options);
+      //setup the url for fetching the rest of the data about each of the top 50
+      options.url = BASE_URL 
+      //fetch the rest of the data about the rest of the top 50
+      //I would have to also search the database :(
+
+      console.log(response.data.results)
+
       //send the response from external API
-      res.send(response.data)
+      res.send(response.data.results)
   } catch (error) {
       options.url = BASE_URL
       console.error(error);

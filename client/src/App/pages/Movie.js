@@ -102,16 +102,18 @@ export default function Movie() {
     )
 
     //Check whether the movie is in the database and display the according form (add vs edit & delete)
+    //ADD BANNER
     return (
         <div className='movie'>
             <h2>This is the page of: { movie.title }</h2>
+            {movie.banner !== '' && <img src={movie.banner} alt='movie banner'></img>}
             { movie.local && <div>In the list!</div> }
             <h4>Description:</h4> 
             
             { editing ? editForm : <p> {movie.description} </p>}
             
             { movie.local ?  (!editing && localButtons) : addForm}
-            <span>{movie.rating}</span>
+            <span>rating: {movie.rating}</span>
         </div>
     )
 }
