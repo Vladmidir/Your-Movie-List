@@ -9,10 +9,12 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.TEXT,
             allowNull: true
         },
-        //use imdb_id as a unique identifier
         imdb_id: {
             type: Sequelize.STRING,
-        }
+        },
+        rating: Sequelize.FLOAT,
+        thumbnail: Sequelize.STRING,
+        banner: Sequelize.STRING
     }, {
         //other model options go here. For exapmple we could stop auto-pluralization with `freezeTableName: true`.
         //Providing table name directly: `tableName: Movies`.

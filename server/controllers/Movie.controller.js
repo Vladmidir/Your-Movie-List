@@ -30,10 +30,19 @@ async function findOneMoviesMiniDB(movie_id) {
   try {
       const response = (await axios.request(options)).data.results;
       //format the response from external API
-      movieExternal = {imdb_id: response.imdb_id, title: response.title, description: response.description, local: false}
+      movieExternal = {
+        imdb_id: response.imdb_id, 
+        title: response.title, 
+        description: response.description, 
+        rating: response.rating,
+        thumbnail: response.image_url,
+        banner: response.banner,
+        local: false
+      }
       options.url = BASE_URL // change the link before returning!
       return(movieExternal)
   } catch (error) {
+      options.url = BASE_URL
       console.error(error);
   }
   //reset the url back to default
@@ -68,7 +77,6 @@ exports.search = async (req, res) => {
   try {
       const response = await axios.request(options);
       //send the response from external API
-      console.log(response.data.results)
       res.send(response.data.results)
   } catch (error) {
       options.url = BASE_URL
@@ -92,6 +100,9 @@ exports.create = (req, res) => {
     title: req.body.title,
     description: req.body.description,
     imdb_id: req.body.imdb_id,
+    rating: req.body.rating,
+    thumbnail: req.body.thumbnail,
+    banner: req.body.banner,
     UserId: req.user.id
   };
 

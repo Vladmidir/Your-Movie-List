@@ -14,7 +14,7 @@ const bodyParser = require('body-parser'); //for the html forms
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const db = require("./database/index") 
-db.sequelize.sync({force: false})
+db.sequelize.sync({force: true})
   .then(() => {
     console.log("Synced db.");
   })
