@@ -1,7 +1,25 @@
+*, *::before, *::after {
+    font-family: 'Open Sans', sans-serif;
+}
+
 .hidden-input {
     display: none;
 }
 .error-message {
     background-color: red;
     width: 200px;
+}
+
+ol li{
+    list-style-type: none;
+  }
+
+.card-grid {
+    margin: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(70vh, 1fr)); /*automatically generate the columns. 
+    Minimum size is 70vh (use vh instead of vw because of mobile), max size is as large as it needs to be */
+    gap: 2rem;
+    align-items: flex-start; /*always at the top and does not fill in the full height */
+    align-items: flex-start; /*always at the top and does not fill in the full height */
 }

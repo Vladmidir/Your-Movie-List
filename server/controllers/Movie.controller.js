@@ -75,8 +75,9 @@ exports.findTop50 = async (req, res) => {
         })
         //if found a movie in local db, return that
         if(movieLocal != null){
-          movieLocal.local = true
-          return movieLocal
+          movieLocalJson = movieLocal.toJSON()
+          movieLocalJson.local = true
+          return movieLocalJson
         }
         //if not in the local, format and return the response data
         //Send the data from MoviesDatabase
@@ -123,8 +124,9 @@ exports.search = async (req, res) => {
         })
         //if found a movie in local db, return that
         if(movieLocal != null){
-          movieLocal.local = true
-          return movieLocal
+          movieLocalJson = movieLocal.toJSON()
+          movieLocalJson.local = true
+          return movieLocalJson
         }
         //if not in the local, format and return the response data
         //Send the data from MoviesDatabase

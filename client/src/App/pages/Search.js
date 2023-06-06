@@ -23,13 +23,11 @@ export default function Search({user}) {
         <div className='search-list'>
             <h1>Search results for {query.get("title")}</h1>
             <div>
-                <ol>
-                    {results.map((movie, index) => {
-                        return <li key={index}>
-                            <MoviePreview movie={movie}/>
-                        </li>
+            <div className='card-grid'>
+                    {results.map((movie) => {
+                        return <MoviePreview movie={movie} />
                     })}
-                </ol>
+            </div>
             </div>
         </div>
     )

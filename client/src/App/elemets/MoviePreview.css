@@ -1,0 +1,145 @@
+.card-header > a {
+    color: black;
+    position: relative; /*for a::before{ position:absolute } to work */
+}
+
+.card-header > a::before { /*Link underline*/
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    border-radius: 2px;
+    background-color: hsl(200, 50%, 50%);
+    bottom: 0;
+    left: 0;
+    transform-origin: left; /*hide from right to left */
+    transform: scaleX(0); /*hide by default*/
+    transition: transform 300ms ease-in-out;
+  }
+
+.card-header > a:hover::before {
+  transform-origin: left; /*where to start scaling from */
+  transform: scaleX(1);
+}
+
+.card {
+    position: relative;
+    box-sizing: border-box;
+    --padding: 1rem;/* rem is relative to the document root (eg. body?) Research this further*/
+    background: white;
+    border: solid #777;
+    border-radius: 0.25rem;
+    overflow: hidden; /*to round the image corners */
+    display: grid;
+    grid-template-columns: 150px auto;
+    transition: 200ms transform ease-in-out; /* smooth out the zoom in */
+
+}
+
+.card.card-shadow {
+    border: none;
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2); /*x-offset, y-offset, blur, spread, color */
+}
+
+.card-image {
+    grid-column: 1;
+    grid-row: 1/4;
+    padding: 0;
+    overflow: hidden;
+}
+
+.card-image > img {
+    display: block;
+    height: 100%;
+    max-width: 150px;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    object-position: center;
+}
+
+.card:hover  {
+    transform: scale(1.025); /*to zoom on hover */
+}
+
+.card-header {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    grid-column: 2;
+    grid-row: 1;
+    padding: var(--padding);
+    padding-bottom: 0;
+    font-size: 1.5rem;
+    margin-bottom: .5rem; /*Space header from body*/
+    overflow: hidden;
+}
+
+
+
+.card-body {
+    text-decoration: none;
+    grid-row: 2;
+    grid-column: 2;
+    max-height: fit-content;
+    font-size: .9rem; /*kinda small, maybe change back to 1*/
+    padding: 0 var(--padding); /* vertical padding is 0 (first number) */
+
+}
+
+.card-description{
+    text-overflow:ellipsis;
+    overflow:hidden;
+    /* Addition lines for 4 line or multiline ellipsis */
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+}
+
+.card-rating {
+    position: absolute;
+    bottom: 10%;
+    float: left;
+    font-size: 1rem;
+    padding: .75em 0;
+}
+
+.card-footer {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0;
+    grid-row: 3;
+    grid-column: 2;
+    margin-top: .5rem;
+    padding: var(--padding);
+    padding-top: 0;
+}
+
+.btn {
+    --color: hsl(200, 50%, 50%); /*use a varible!*/
+    background: var(--color);
+    border: none;
+    color: white;
+    font-size: 1rem;
+    padding: .5em .75em; /* use em instead of rem, so that if we scale the font, the padding scales with it. */
+    border-radius: .25em;
+    cursor: pointer;
+}
+
+.btn:hover, btn:focus {
+    background: hsl(200, 50%, 60%); /*change background to a lighter one on hover*/
+}
+
+.btn.btn-outline {
+    background: none;
+    border: 1px solid var(--color);
+    color: var(--color);
+}
+
+.btn.btn-outline:hover, .btn.btn-outline:focus {
+    background: hsl(200, 50%, 90%);
+}
+
+.btn + .btn { /*very cool sytax trick! */
+    margin-left: .25rem;
+}

@@ -64,13 +64,11 @@ function List() {
                 </div>
                 <button>Sort</button>
             </form>
-            <ol>
-                {movies.map((movie, index) => {
-                    return <li key={index}>
-                        <MoviePreview movie={movie}/>
-                    </li>
-                })}
-            </ol>
+            <div className='card-grid'>
+                    {movies.map((movie) => {
+                        return <MoviePreview movie={{...movie, local: true}} />
+                    })}
+            </div>
         </div>
     )
 }
