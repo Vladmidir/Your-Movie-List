@@ -50,24 +50,23 @@ export default function MoviePreview({movie}) {
 
     return (
         <div className="card card-shadow">
-                <div class="card-image" >
-                    <img  src={ movie.banner } alt="movie banner" />
-                </div>
-                <div class="card-header">
-                    <Link style={{textDecoration: "none"}} to={'/movie/' + movie.imdb_id}>
-                        { movie.title }
-                    </Link>
-                </div>
-                <div class="card-body">
-                    <p className='card-description'>
-                        { movie.description }
-                    </p>
-                    <div class="card-rating">Rating: { movie.rating }</div>
-                </div>
+            <div class="card-image" >
+                <img  src={ movie.banner } alt="movie banner" />
+            </div>
+            <div class="card-header">
+                <Link style={{textDecoration: "none"}} to={'/movie/' + movie.imdb_id}>
+                    { movie.title }
+                </Link>
+            </div>
+            <div class="card-body">
+                    { movie.description }
+            </div>
+            <div class="card-rating">Rating: { movie.rating }</div>
             <div class="card-footer">
-                {!movie.local ? <button class="btn" onClick={addMovie}>Add</button> : <button class="btn btn-outline" onClick={deleteMovie}>Remove</button>}
-                
-                
+                {!movie.local ? 
+                <button class="btn" onClick={addMovie}>Add</button> 
+                :
+                <button class="btn btn-outline" onClick={deleteMovie}>Remove</button>}
             </div>
         </div>
     )

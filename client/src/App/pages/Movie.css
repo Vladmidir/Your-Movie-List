@@ -1,4 +1,26 @@
+.movie {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto;
+}
+
+.movie-header {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.movie-body {
+    grid-row: 2;
+    font-size: 1em;
+}
+
+.movie-footer {
+    grid-row: 3;
+}
+
 .movie-banner {
+    grid-column: 1;
+    grid-row: 1/4;
     max-height: 500px;
     max-height: auto;
 }

@@ -74,7 +74,7 @@ export default function Movie() {
             <input className='hidden-input' name='thumbnail' type='text' value={ movie.thumbnail } readOnly/>
             <input className='hidden-input' name='banner' type='text' value={ movie.banner } readOnly/>
 
-            <button >add</button>
+            <button className='btn'>add</button>
         </form>)
 
     //form for editing the movie description
@@ -90,15 +90,15 @@ export default function Movie() {
             <input className='hidden-input' name='thumbnail' type='text' value={ movie.thumbnail } readOnly/>
             <input className='hidden-input' name='banner' type='text' value={ movie.banner } readOnly/>
             <button type='submit' >save</button>
-            <button onClick={() => {setEditing(false); newDescription.current = movie.description}} >cancel</button>
+            <button className='btn' onClick={() => {setEditing(false); newDescription.current = movie.description}} >cancel</button>
         </form>
     )
     
     //Buttons to display for when the movie is local (added to the list)
     const localButtons = (
         <div>
-            <button onClick={ setEditing }>edit</button>
-            <button onClick={ () => { deleteMovie();}}>delete</button>
+            <button className='btn' onClick={ setEditing }>edit</button>
+            <button className='btn' onClick={ () => { deleteMovie();}}>delete</button>
         </div>
     )
 
@@ -106,15 +106,19 @@ export default function Movie() {
     //ADD BANNER
     return (
         <div className='movie'>
-            <h2>This is the page of: { movie.title }</h2>
-            { movie.local && <div>In the list!</div> }
-            {movie.banner !== '' && <img className='movie-banner' src={movie.banner} alt='movie banner'></img>}
-            <h4>Description:</h4> 
-            
-            { editing ? editForm : <p> {movie.description} </p>}
-            
+            <img className='movie-banner' src={movie.banner} alt='movie banner'/>
+            <div className='movie-header'>
+                <h2>{ movie.title }</h2>
+                { movie.local && <div>In the list!</div> }
+            </div>
+            <div className='movie-body'>
+                <h3>Description:</h3>
+                { editing ? editForm : <p> {movie.description} </p>}
+            </div>
+            <div className='movie-footer'>
             { movie.local ?  (!editing && localButtons) : addForm}
             <span>rating: {movie.rating}</span>
+            </div>
         </div>
     )
 }

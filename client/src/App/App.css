@@ -2,6 +2,11 @@
     font-family: 'Open Sans', sans-serif;
 }
 
+body {
+    margin: 10px 30px;
+    background-color: hsl(348, 45%, 98%);
+}
+
 .hidden-input {
     display: none;
 }
@@ -10,16 +15,19 @@
     width: 200px;
 }
 
-ol li{
+ol, ul{
     list-style-type: none;
-  }
+    padding: 0;
+}
 
 .card-grid {
-    margin: 10px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(70vh, 1fr)); /*automatically generate the columns. 
+    grid-template-columns: repeat(auto-fit, minmax(50vh, 1fr)); /*automatically generate the columns. 
     Minimum size is 70vh (use vh instead of vw because of mobile), max size is as large as it needs to be */
-    gap: 2rem;
+    gap: 1rem;
     align-items: flex-start; /*always at the top and does not fill in the full height */
-    align-items: flex-start; /*always at the top and does not fill in the full height */
+}
+
+@media (max-width: 600px){
+
 }

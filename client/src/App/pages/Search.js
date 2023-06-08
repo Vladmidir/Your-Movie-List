@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import MoviePreview from '../elemets/MoviePreview'
+import "./Search.css"
 
 export default function Search({user}) {
 
@@ -20,14 +21,12 @@ export default function Search({user}) {
     }, [query]) 
 
     return (
-        <div className='search-list'>
-            <h1>Search results for {query.get("title")}</h1>
-            <div>
+        <div className='search-results'>
+            <h1 className='sub-header' >Search results for {query.get("title")}:</h1>
             <div className='card-grid'>
                     {results.map((movie) => {
                         return <MoviePreview movie={movie} />
                     })}
-            </div>
             </div>
         </div>
     )

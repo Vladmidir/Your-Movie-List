@@ -1,0 +1,7 @@
+.home-body {
+    margin-top: 1em;
+}
+
+.home-body > h2 {
+    margin-bottom: 10px;
+}

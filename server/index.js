@@ -78,7 +78,12 @@ app.post("/api/login", checkNotAuthenticated ,passport.authenticate('local', {
 }))
 
 //Logout the user 
-app.post("/api/logout", checkAuthenticated,(req, res) => {
+app.post("/api/logout",(req, res) => {
+  //make sure the user is logged in
+  if (!req.isAuthenticated()) { 
+    return  res.status(401).redirect('/login')
+  }
+
   req.logout(function(err) { //the logout function is now async!
       if (err) { 
           res.send(err)

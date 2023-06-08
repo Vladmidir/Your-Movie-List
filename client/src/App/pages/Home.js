@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import MoviePreview from '../elemets/MoviePreview'
+import './Home.css'
 
 export default function Home({user}) {
 
@@ -12,10 +13,12 @@ export default function Home({user}) {
     }, [])
 
     return (
-        <div className='Home'>
-            <h1>Welcome Home, {user.name} !</h1>
-            <div>
-                <h2>Top 50 Movies</h2>
+        <div>
+            <div className='home-header'>
+                <h1>Welcome to your movie database!</h1>
+            </div>
+            <div className='home-body'>
+                <h2>Top 50 Most Popular</h2>
                 <div className='card-grid'>
                     {top50.map((movie) => {
                         return <MoviePreview movie={movie} />

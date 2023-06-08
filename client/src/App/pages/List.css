@@ -1,3 +1,21 @@
+.sort-form {
+    margin: 1em 0;
+}
+
+.sort-form > * {
+    margin-bottom: 0.25rem;
+}
+
 select {
     margin-left: 5px;
+    font-size: 1rem;
+}
+
+#order {
+    margin-left: 1em;
+}
+
+.sort-btn {
+    font-size: 1.2em;
+    padding: 0.25em 0.75em;
 }

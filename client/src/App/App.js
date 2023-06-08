@@ -47,7 +47,7 @@ function App() {
     {
       path: "/",
       loader: checkAuth,
-      element: <Layout />,
+      element: <Layout user={user}/>,
       children: [
         {
           path: '',

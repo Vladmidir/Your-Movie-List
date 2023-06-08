@@ -23,7 +23,6 @@
 }
 
 .card {
-    position: relative;
     box-sizing: border-box;
     --padding: 1rem;/* rem is relative to the document root (eg. body?) Research this further*/
     background: white;
@@ -31,7 +30,7 @@
     border-radius: 0.25rem;
     overflow: hidden; /*to round the image corners */
     display: grid;
-    grid-template-columns: 150px auto;
+    grid-template-columns: 150px auto auto;
     transition: 200ms transform ease-in-out; /* smooth out the zoom in */
 
 }
@@ -62,11 +61,11 @@
 }
 
 .card-header {
+    grid-column: 2/4;
+    grid-row: 1;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    grid-column: 2;
-    grid-row: 1;
     padding: var(--padding);
     padding-bottom: 0;
     font-size: 1.5rem;
@@ -74,19 +73,12 @@
     overflow: hidden;
 }
 
-
-
 .card-body {
-    text-decoration: none;
+    grid-column: 2/4;
     grid-row: 2;
-    grid-column: 2;
-    max-height: fit-content;
-    font-size: .9rem; /*kinda small, maybe change back to 1*/
+    max-height: 5rem;
+    font-size: .9rem;
     padding: 0 var(--padding); /* vertical padding is 0 (first number) */
-
-}
-
-.card-description{
     text-overflow:ellipsis;
     overflow:hidden;
     /* Addition lines for 4 line or multiline ellipsis */
@@ -97,19 +89,20 @@
 }
 
 .card-rating {
-    position: absolute;
-    bottom: 10%;
-    float: left;
+    grid-column: 2;
+    grid-row: 3;
+    align-self: end;
+    justify-self: start;
     font-size: 1rem;
-    padding: .75em 0;
+    padding: var(--padding);
+    margin-bottom: 0.5rem;
 }
 
 .card-footer {
-    position: absolute;
-    bottom: 0.5rem;
-    right: 0;
+    align-self: end; /*alighn towards the bottom */
+    justify-self: end; /*justify towards the right */
     grid-row: 3;
-    grid-column: 2;
+    grid-column: 3;
     margin-top: .5rem;
     padding: var(--padding);
     padding-top: 0;

@@ -7,7 +7,6 @@ function List() {
 
     const [movies, setMovies] = React.useState([]) //useMemo instead?
 
-
     //get all movies saved by the user.
     React.useEffect(() => {
       fetch('/api/movie').then((res) => res.json()).then((fetched_data) => {
@@ -46,9 +45,9 @@ function List() {
     return (
         <div className='list'>
             <h1>Your movie list:</h1>
-            <form onSubmit={(e) => {e.preventDefault(); sortMovies();}}>
+            <form className='sort-form' onSubmit={(e) => {e.preventDefault(); sortMovies();}}>
                 <div>
-                    <label htmlFor='property'>Sort by</label>
+                    <label htmlFor='property'>Sort by:</label>
                     <select name="property" id='property'>
                       <option value="date-saved">Date saved</option>
                       <option value="date-modified">Date modified</option>
@@ -56,13 +55,13 @@ function List() {
                     </select>
                 </div>
                 <div>
-                    <label htmlFor='order'>Order</label>
+                    <label htmlFor='order'>Order:</label>
                     <select name="order" id='order'>
                       <option value="ascending">Ascending</option>
                       <option value="descending">Descending</option>
                     </select>
                 </div>
-                <button>Sort</button>
+                <button className='btn sort-btn'>Sort</button>
             </form>
             <div className='card-grid'>
                     {movies.map((movie) => {

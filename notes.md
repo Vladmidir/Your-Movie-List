@@ -69,6 +69,13 @@
 - Add a tooltip to the movie title [Tooltips with only CSS](https://blog.logrocket.com/creating-beautiful-tooltips-with-only-css/).
 - Refactor MoviePreview to use `card-shadow` by default (no overwrting `card`)
 - Figure out why `class` works, but `className` does not.
+- I DONT NEED A UL!!! **June 7**
+- I DONT NEED BUTTONS for wrapping everything!!! **June 7**
+- FINISH THE NAVBAR DESIGN **June 7**
+- FIISH ALL FRONT-END **June 11**
+- Make it responsive (MoviePreview)
+- Display the number of results as <h2> for the Search page.
+
 
 ## Future plans
 - Make more efficient (useMemo instead of useState. Less unnecessary API calls)
