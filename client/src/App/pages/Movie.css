@@ -1,26 +1,75 @@
+.movie-container {
+    display: flex;
+    align-items: center;
+}
+
+.similar-movie {
+
+}
+
 .movie {
+    margin-top: 2em;
+    max-width: 80%;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto auto ;
     grid-template-rows: auto auto auto;
+    justify-self: center;
+    align-self: center;
+    gap: 1em;
 }
 
 .movie-header {
+    font-size: 1.5em;
     grid-column: 2;
     grid-row: 1;
 }
 
+
 .movie-body {
     grid-row: 2;
-    font-size: 1em;
+    font-size: 1.3rem;
+    align-self: flex-start;
+}
+
+.edit-description {
+    resize: none;
+    width: 160%;
+    height: 100%;
+    font-size: 1.3rem;
+    padding: .25em;
+    border-radius: 5px;
+    background-color: hsl(348, 10%, 98%);
+
+}
+
+.edit-description:hover {
+    cursor: pointer;
+}
+
+.edit-description:focus {
+    cursor: text;
 }
 
 .movie-footer {
+    font-size: 1.3em; 
     grid-row: 3;
+    align-self: flex-end;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.movie-footer > span {
+    font-weight: bold;
 }
 
 .movie-banner {
     grid-column: 1;
     grid-row: 1/4;
-    max-height: 500px;
+    max-height: 38em;
     max-height: auto;
+}
+
+.movie-btn {
+    font-size: 1.25rem;
 }

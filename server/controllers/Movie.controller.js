@@ -22,48 +22,66 @@ const options = {
 };
 
 //#EXTERNAL API INTERFACE#
+
+function RapidAPItoMyAPI(movie) {
+  try {
+    return  { 
+      imdb_id: movie.id, 
+      title: movie.originalTitleText.text, 
+      description: movie.plot.plotText.plainText, 
+      rating: movie.ratingsSummary.aggregateRating,
+      banner: movie.primaryImage.url,
+      genre: movie.genres.genres[0].text,//only save one genere. A movie may have multiple genre, 
+      //I just don't want to bother setting up another one-to-many relationship
+      local: false
+    }
+  } catch (e) {
+    console.log(e)
+    return {
+      imdb_id: "", 
+      title: "", 
+      description: "",
+      rating: 0,
+      banner: "",
+      genre: "",
+      local: false}
+  }
+}
+
 /**
  * Return the movie object with the id provided from MoviesMiniDB
  * @param {string} movie_id 
  */
 async function findOneMoviesMiniDB(movie_id) { //RENAME TO MOVIES RAPID
-  const url = "titles/" + movie_id
-  options.url += url
+  const newOptions = {...options}
 
+  const url = "titles/" + movie_id
+  newOptions.url += url
   //fetch the data
   try {
-      const results = (await axios.request(options)).data.results;
+      const results = (await axios.request(newOptions)).data.results;
       //format the results from external API
-      movieExternal = { 
-        imdb_id: results.id, 
-        title: results.originalTitleText.text, 
-        description: results.plot.plotText.plainText, 
-        rating: results.ratingsSummary.aggregateRating,
-        banner: results.primaryImage.url,
-        local: false
-      }
-      options.url = BASE_URL // change the link before returning!
+      movieExternal = RapidAPItoMyAPI(results)
       return(movieExternal)
   } catch (error) {
-      options.url = BASE_URL
       console.error(error);
   }
-  //reset the url back to default
-  options.url = BASE_URL
 }
 
 
 exports.findTop50 = async (req, res) => {
   //set up a custom url for the API
+  const newOptions = { ...options }
+
   const url = "titles/"
-  options.url += url
-  options.params.list = "most_pop_movies"
-  options.params.limit = "50"
+  newOptions.url += url
+  newOptions.params.list = "most_pop_movies"
+  newOptions.params.limit = "50"
 
   //fetch the data
   try {
       //get the top 50 most popular movies
-      const response = (await axios.request(options)).data.results;
+      const response = (await axios.request(newOptions)).data.results;
       //format the data for every movie, checking the database for every movie
       const movies = response.map(async (movie) => {
         //try to find the movie locally
@@ -81,33 +99,22 @@ exports.findTop50 = async (req, res) => {
         }
         //if not in the local, format and return the response data
         //Send the data from MoviesDatabase
-        movieExternal = { 
-          imdb_id: movie.id, 
-          title: movie.originalTitleText.text, 
-          description: movie.plot.plotText.plainText, 
-          rating: movie.ratingsSummary.aggregateRating,
-          banner: movie.primaryImage.url,
-          local: false
-        }
+        movieExternal = RapidAPItoMyAPI(movie)
         return movieExternal
       })
       //send the response from external API
-      options.url = BASE_URL
       res.json(await Promise.all(movies))
   } catch (error) {
-      options.url = BASE_URL
       console.error(error);
   }
-  //reset the url back to default
-  options.url = BASE_URL
 }
 
 exports.search = async (req, res) => {
   //set up a custom url for the API
   const url = "titles/search/title/" + req.query.title
   options.url += url
-  options.excact = false
-  options.limit = "20"
+  options.params.excact = false
+  options.params.limit = "20"
 
   //fetch the data
   try {
@@ -130,17 +137,11 @@ exports.search = async (req, res) => {
         }
         //if not in the local, format and return the response data
         //Send the data from MoviesDatabase
-        movieExternal = { 
-          imdb_id: movie.id, 
-          title: movie.originalTitleText.text, 
-          description: movie.plot.plotText.plainText, 
-          rating: movie.ratingsSummary.aggregateRating,
-          banner: movie.primaryImage.url,
-          local: false
-        }
+        movieExternal = RapidAPItoMyAPI(movie)
         return movieExternal
       })
       //send the response from external API
+
       res.json(await Promise.all(movies))
   } catch (error) {
       options.url = BASE_URL
@@ -148,6 +149,51 @@ exports.search = async (req, res) => {
   }
   //reset the url back to default
   options.url = BASE_URL
+}
+
+exports.similar = async (req, res) => {
+  //set up a custom url for the API
+  const newOptions = {...options}
+
+  const url = 'titles/random'
+  newOptions.url += url
+
+  newOptions.params.genre = req.params.genre
+  newOptions.params.titleType = "movie"
+  newOptions.params.limit = "3"
+  newOptions.params.list = "most_pop_movies"
+
+  //fetch the data
+  try {
+      const response = (await axios.request(newOptions)).data.results;
+
+      //MAKE THIS MAP INTO A UTILITY FUNCTION
+      const movies = response.map(async (movie) => {
+        //try to find the movie locally
+        movieLocal = await Movie.findOne({
+          where: {
+            imdb_id: movie.id,
+            UserId: req.user.id
+          }
+        })
+
+        //if found a movie in local db, return that
+        if(movieLocal != null){
+          movieLocalJson = movieLocal.toJSON()
+          movieLocalJson.local = true
+          return movieLocalJson
+        }
+        //if not in the local, format and return the response data
+        //Send the data from MoviesDatabase
+        movieExternal = RapidAPItoMyAPI(movie)
+        return movieExternal
+      })
+      //send the response from external API
+      res.json(await Promise.all(movies))
+  } catch (error) {
+      console.error(error);
+      res.json({})
+  }
 }
 
 //#END EXTERNAL API INTERFACE#
@@ -168,6 +214,7 @@ exports.create = (req, res) => {
     imdb_id: req.body.imdb_id,
     rating: req.body.rating,
     banner: req.body.banner,
+    genre: req.body.genre,
     UserId: req.user.id
   };
 

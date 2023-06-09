@@ -7,6 +7,15 @@ body {
     background-color: hsl(348, 45%, 98%);
 }
 
+h3 {
+    font-size: 1.3rem;
+}
+
+ol, ul{
+    list-style-type: none;
+    padding: 0;
+}
+
 .hidden-input {
     display: none;
 }
@@ -15,10 +24,7 @@ body {
     width: 200px;
 }
 
-ol, ul{
-    list-style-type: none;
-    padding: 0;
-}
+
 
 .card-grid {
     display: grid;

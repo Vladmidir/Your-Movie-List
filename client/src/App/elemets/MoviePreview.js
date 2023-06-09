@@ -26,8 +26,8 @@ export default function MoviePreview({movie}) {
             title: movie.title,
             description: movie.description, //pass the new description
             rating: movie.rating,
-            thumbnail: movie.thumbnail,
-            banner: movie.banner
+            banner: movie.banner,
+            genre: movie.genre
         }
         try {
             await fetch('/api/movie/', {
