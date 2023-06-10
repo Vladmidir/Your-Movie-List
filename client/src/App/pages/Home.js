@@ -9,6 +9,7 @@ export default function Home({user}) {
     React.useEffect(() => {
         fetch('/api/movie/top50').then((res) => res.json()).then(async (data) => {
             setTop50(data)
+            console.log(data)
         })
     }, [])
 

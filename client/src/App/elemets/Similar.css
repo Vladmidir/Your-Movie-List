@@ -1,0 +1,10 @@
+.card-flex {
+    margin-top: -3em; /* compensate for the grid gap */
+    margin-left: 8%;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 1em;
+    transform: scale(0.8);
+    width: 115%; /*compenste for scale */
+}

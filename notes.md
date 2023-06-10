@@ -12,6 +12,7 @@
 ## Notes
 
 ### General notes:
+- Destructing objects creates a shallow copy {...obj}. [More on that here](https://stackoverflow.com/questions/12690107/clone-object-without-reference-javascript)
 - App routing takes the following form `app.METHOD(PATH, HANDLER)
 - IMPORTANT: I did not install some packages as `dev` and installed them forever (eg, sequelize-cli). Make sure this is not an issue.
 ### Setup notes
@@ -74,6 +75,10 @@
 - Make it responsive (MoviePreview)
 - Display the number of results as `<h2>` for the Search page.
 - Read about the specifics of using async inside useEffect [article](https://ultimatecourses.com/blog/using-async-await-inside-react-use-effect-hook)
+- <s>API similar crashes when the movie is in the database. Figure out why! **June 9**</s>
+- deep copy `options` with lodash instead of json. **Optional **
+- Move button styles from `MoviePreview.css` to `App.css`
+- FIX THE MOVIE SEARCH  **June 10**
 
 
 ## Future plans

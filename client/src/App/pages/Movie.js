@@ -1,13 +1,12 @@
 import { React, useEffect, useState, useRef} from 'react';
 import { useParams } from 'react-router-dom';
 import "./Movie.css"
-import MoviePreview from '../elemets/MoviePreview';
+import Similar from '../elemets/Similar';
 
 export default function Movie() {
 
     //get the id from the url parameters
     let { id } = useParams()
-    const [similar, setSimilar] = useState([])
     const [movie, setMovie] = useState({//data about the movie.
         id: "", 
         imdb_id: "", 
@@ -22,31 +21,13 @@ export default function Movie() {
     const [rerender, doRerender] = useState(false) //simply rerenders the page.
     const newDescription = useRef("") //I am not sure if I actually need this. Easier so I dont have to setMovie every time.
 
-
-
     //fetch the info from the API based on the ID. 
     useEffect(() => {
-        (async () => {
-            await fetch('/api/movie/' + id).then((res) => res.json()).then(async (data) => {
+         fetch('/api/movie/' + id).then((res) => res.json()).then(async (data) => {
                 setMovie(data)
                 newDescription.current = data.description
-                
             })
-            //request similar movies using the current movie's genre
-            await fetch('/api/movie/similar/' + movie.genre).then(async (res) => {
-                const resJ = await res.json()
-                console.log(resJ); return resJ}).then((data) => {
-                setSimilar(data)
-            })
-            
-        })()
-
-        console.log(similar)
-
-        
-        
-    }, [id, editing, movie.genre])
-
+    }, [id, editing])
 
 
     /**
@@ -138,27 +119,24 @@ export default function Movie() {
     //ADD BANNER
     return (
         <div className='movie-container'>
-        <div className='movie'>
-            <img className='movie-banner' src={movie.banner} alt='movie banner'/>
-            <div className='movie-header'>
-                <h2>{ movie.title }</h2>
-                { movie.local && <div>In the list!</div> }
-            </div>
-            { editing ? editForm : movieBody}
+            <div className='movie'>
+                <img className='movie-banner' src={movie.banner} alt='movie banner'/>
+                <div className='movie-header'>
+                    <h2>{ movie.title }</h2>
+                    { movie.local && <div>In the list!</div> }
+                </div>
+                { editing ? editForm : movieBody}
 
-            <div className='movie-footer'>
-                <span>Rating: {movie.rating}</span>
+                <div className='movie-footer'>
+                    <span>Rating: {movie.rating}</span>
 
-                { movie.local ?  (!editing && localButtons) : addForm}
+                    { movie.local ?  (!editing && localButtons) : addForm}
+                </div>
             </div>
-        </div>
-        <div className='similar-movies'>
-            <div className='card-grid'>
-                {similar.map((movie, index) => {
-                        return <MoviePreview key={index} movie={movie} />
-                    })}
+            <div className='similar-section'>
+                <h3>Similar Movies</h3>
+                <Similar genre={movie.genre}/>
             </div>
-        </div>
         </div>
 
     )

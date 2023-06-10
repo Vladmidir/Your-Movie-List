@@ -7,8 +7,8 @@ router.get("/top50", Movies.findTop50)
 //search for a movie locally, if not found return data from RapidAPI
 router.get("/search", Movies.search)
 
-
-router.get("/similar/:genre", Movies.similar)
+//get random movies of the genre
+router.get("/similar", Movies.similar)
 
 //Get all movies in the LOCAL database
 router.get("/", Movies.findAll)

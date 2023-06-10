@@ -24,8 +24,6 @@ ol, ul{
     width: 200px;
 }
 
-
-
 .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(50vh, 1fr)); /*automatically generate the columns. 

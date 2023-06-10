@@ -1,17 +1,17 @@
 .movie-container {
     display: flex;
     align-items: center;
-}
-
-.similar-movie {
-
+    justify-content: space-between;
+    --banner-height: 38em;
 }
 
 .movie {
+    flex-grow: 1;
+    align-self: flex-start;
     margin-top: 2em;
-    max-width: 80%;
+    max-width: 70%;
     display: grid;
-    grid-template-columns: auto auto ;
+    grid-template-columns: calc((var(--banner-height) * 2/3) - .5em) auto; /* set the first column to banner width */
     grid-template-rows: auto auto auto;
     justify-self: center;
     align-self: center;
@@ -33,7 +33,7 @@
 
 .edit-description {
     resize: none;
-    width: 160%;
+    width: 100%;
     height: 100%;
     font-size: 1.3rem;
     padding: .25em;
@@ -66,10 +66,24 @@
 .movie-banner {
     grid-column: 1;
     grid-row: 1/4;
-    max-height: 38em;
+    max-height: var(--banner-height);
     max-height: auto;
 }
 
 .movie-btn {
     font-size: 1.25rem;
+}
+
+.similar-section  {
+    margin-top: 2em;
+    max-height: var(--banner-height);
+    max-width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.similar-section > h3 {
+    margin-left: 16%; /* recenter */
 }
