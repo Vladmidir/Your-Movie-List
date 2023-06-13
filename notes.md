@@ -78,7 +78,7 @@
 - <s>API similar crashes when the movie is in the database. Figure out why! **June 9**</s>
 - deep copy `options` with lodash instead of json. **Optional **
 - Move button styles from `MoviePreview.css` to `App.css`
-- FIX THE MOVIE SEARCH  **June 10**
+- <s>FIX THE MOVIE SEARCH  **June 10**</s>
 
 
 ## Future plans

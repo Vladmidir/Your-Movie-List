@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import MoviePreview from './MoviePreview';
 import "./Similar.css"
 
-export default function Similar({genre}) {
+export default function Similar({genre, rerender}) {
     
     const [movies, setMovies] = useState([])
 
@@ -15,13 +15,13 @@ export default function Similar({genre}) {
             })
         }
         
-    }, [genre])
+    }, [genre, rerender])
 
     return (
         <div className='card-flex'>
                 {genre !== "" && movies.map((movie) => {
                         return <MoviePreview key={movie.imdb_id} movie={movie} />
                     })}
-            </div>
+        </div>
     )
 }

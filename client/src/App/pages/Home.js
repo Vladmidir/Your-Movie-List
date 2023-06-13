@@ -4,7 +4,7 @@ import './Home.css'
 
 export default function Home({user}) {
 
-    const [top50, setTop50] = useState([]) //useMemo instead of state?  
+    const [top50, setTop50] = useState([]) //useMemo instead of state? Have to useState, beucase of the database.
     
     React.useEffect(() => {
         fetch('/api/movie/top50').then((res) => res.json()).then(async (data) => {
