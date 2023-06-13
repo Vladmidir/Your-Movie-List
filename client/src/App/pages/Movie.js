@@ -14,7 +14,7 @@ export default function Movie() {
         description: "",
         rating: 0.0,
         banner: "",
-        genre: "",
+        genre: "",  
         UserId: "",  
         local: false}) 
     const [editing, setEditing] = useState(false) //whether the movie data is currently being edited.
@@ -135,7 +135,7 @@ export default function Movie() {
             </div>
             <div className='similar-section'>
                 <h3>Similar Movies</h3>
-                <Similar genre={movie.genre}/>
+                <Similar genre={movie.genre} rerender={movie.title}/>
             </div>
         </div>
 

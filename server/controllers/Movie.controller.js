@@ -53,13 +53,13 @@ async function findOneMoviesMiniDB(movie_id) { //RENAME TO MOVIES RAPID
       //format the results from external API
       movieExternal = {
         imdb_id: results.id, 
-        title: results.originalTitleText.text, 
-        description: results.plot.plotText.plainText, 
-        rating: results.ratingsSummary.aggregateRating,
-        banner: results.primaryImage.url,
-        genre: results.genres.genres[0].text,//only save one genere. A movie may have multiple genre, 
-        //I just don't want to bother setting up another one-to-many relationship
-        local: false
+          title: results.originalTitleText.text, 
+          description: results.plot !== null ? results.plot.plotText.plainText : "", 
+          rating: results.ratingsSummary !== null ? results.ratingsSummary.aggregateRating: 0,
+          banner: results.primaryImage !== null ? results.primaryImage.url : "",
+          genre: results.genres !== null ? results.genres.genres[0].text : "",//only save one genere. A movie may have multiple genre, 
+          //I just don't want to bother setting up another one-to-many relationship
+          local: false
       }
       return(movieExternal)
   } catch (error) {
@@ -123,10 +123,9 @@ exports.search = async (req, res) => {
   //set up a custom url for the API
   const url = "titles/search/title/" + req.query.title
   newOptions.url += url
-  newOptions.params.excact = false
+  newOptions.params.exact = false
   newOptions.params.limit = "20"
 
-  console.log(newOptions)
   //fetch the data
   try {
       const response = (await axios.request(newOptions)).data.results;
@@ -152,11 +151,11 @@ exports.search = async (req, res) => {
           //console.log(movie.plot.plotText.plainText)
           movieExternal = {
             imdb_id: movie.id, 
-            title: movie.originalTitleText.text, 
-            description: movie.plot.plotText.plainText, 
-            rating: movie.ratingsSummary.aggregateRating,
-            banner: movie.primaryImage.url,
-            genre: movie.genres.genres[0].text,//only save one genere. A movie may have multiple genre, 
+            title:  movie.originalTitleText !== null ? movie.originalTitleText.text : "", 
+            description: (movie.plot !== null && movie.plot.plotText !== null) ? movie.plot.plotText.plainText : "", 
+            rating: movie.ratingsSummary !== null ? movie.ratingsSummary.aggregateRating: 0,
+            banner: movie.primaryImage !== null ? movie.primaryImage.url : "",
+            genre: (movie.genres !== null && movie.genres.genres[0] !== undefined) ? movie.genres.genres[0].text : "",//only save one genere. A movie may have multiple genre, 
             //I just don't want to bother setting up another one-to-many relationship
             local: false
           }
@@ -209,10 +208,10 @@ exports.similar = async (req, res) => {
         movieExternal = {
           imdb_id: movie.id, 
           title: movie.originalTitleText.text, 
-          description: movie.plot.plotText.plainText, 
-          rating: movie.ratingsSummary.aggregateRating,
-          banner: movie.primaryImage.url,
-          genre: movie.genres.genres[0].text,//only save one genere. A movie may have multiple genre, 
+          description: movie.plot !== null ? movie.plot.plotText.plainText : "", 
+          rating: movie.ratingsSummary !== null ? movie.ratingsSummary.aggregateRating: 0,
+          banner: movie.primaryImage !== null ? movie.primaryImage.url : "",
+          genre: movie.genres !== null ? movie.genres.genres[0].text : "",//only save one genere. A movie may have multiple genre, 
           //I just don't want to bother setting up another one-to-many relationship
           local: false
         }
