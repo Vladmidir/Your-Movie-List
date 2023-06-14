@@ -1,3 +1,5 @@
+/* styles used across different pages and elemets here */
+
 *, *::before, *::after {
     font-family: 'Open Sans', sans-serif;
 }
@@ -16,22 +18,48 @@ ol, ul{
     padding: 0;
 }
 
+li, a, input, label {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
 .hidden-input {
     display: none;
-}
-.error-message {
-    background-color: red;
-    width: 200px;
 }
 
 .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(50vh, 1fr)); /*automatically generate the columns. 
-    Minimum size is 70vh (use vh instead of vw because of mobile), max size is as large as it needs to be */
+    Minimum size is 50vh (use vh instead of vw because of mobile), max size is as large as it needs to be */
     gap: 1rem;
     align-items: flex-start; /*always at the top and does not fill in the full height */
 }
 
-@media (max-width: 600px){
+.btn {
+    --color: hsl(200, 50%, 50%); /*use a varible!*/
+    background: var(--color);
+    border: none;
+    color: white;
+    font-size: 1rem;
+    padding: .5em .75em; /* use em instead of rem, so that if we scale the font, the padding scales with it. */
+    border-radius: .25em;
+    cursor: pointer;
+}
 
+.btn:hover, btn:focus {
+    background: hsl(200, 50%, 60%); /*change background to a lighter one on hover*/
+}
+
+.btn.btn-outline {
+    background: none;
+    border: 1px solid var(--color);
+    color: var(--color);
+}
+
+.btn.btn-outline:hover, .btn.btn-outline:focus {
+    background: hsl(200, 50%, 90%);
+}
+
+.btn + .btn { /*very cool sytax trick! */
+    margin-left: .25rem;
 }

@@ -107,32 +107,3 @@
     padding: var(--padding);
     padding-top: 0;
 }
-
-.btn {
-    --color: hsl(200, 50%, 50%); /*use a varible!*/
-    background: var(--color);
-    border: none;
-    color: white;
-    font-size: 1rem;
-    padding: .5em .75em; /* use em instead of rem, so that if we scale the font, the padding scales with it. */
-    border-radius: .25em;
-    cursor: pointer;
-}
-
-.btn:hover, btn:focus {
-    background: hsl(200, 50%, 60%); /*change background to a lighter one on hover*/
-}
-
-.btn.btn-outline {
-    background: none;
-    border: 1px solid var(--color);
-    color: var(--color);
-}
-
-.btn.btn-outline:hover, .btn.btn-outline:focus {
-    background: hsl(200, 50%, 90%);
-}
-
-.btn + .btn { /*very cool sytax trick! */
-    margin-left: .25rem;
-}

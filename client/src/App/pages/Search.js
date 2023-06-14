@@ -23,6 +23,7 @@ export default function Search({user}) {
     return (
         <div className='search-results'>
             <h1 className='sub-header' >Search results for {query.get("title")}:</h1>
+            <h2>Sorted by date (descending)</h2>
             <div className='card-grid'>
                     {results.map((movie) => {
                         return <MoviePreview movie={movie} />

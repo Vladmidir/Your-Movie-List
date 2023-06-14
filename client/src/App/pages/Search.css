@@ -1,3 +1,5 @@
-.search-results > h1 {
+.search-results > h2 {
+    font-size: 1.25em;
+    font-weight: 500;
     margin-bottom: 0.75em;
 }

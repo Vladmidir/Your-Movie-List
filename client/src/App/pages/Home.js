@@ -9,14 +9,13 @@ export default function Home({user}) {
     React.useEffect(() => {
         fetch('/api/movie/top50').then((res) => res.json()).then(async (data) => {
             setTop50(data)
-            console.log(data)
         })
     }, [])
 
     return (
         <div>
             <div className='home-header'>
-                <h1>Welcome to your movie database!</h1>
+                <h1>Welcome to Your Movie Database!</h1>
             </div>
             <div className='home-body'>
                 <h2>Top 50 Most Popular</h2>

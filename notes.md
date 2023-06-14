@@ -66,20 +66,18 @@
 - <s>Show whether the movie is "saved" in the MoviePreview element. **June1 || June2**</s>
 - <s>Add and delete movies through MoviePreview. **June2 (Optional)**</s>
 - <s>MoviePreview accordion description. **June2 (optional)** *NOT ACCORDION*</s>
-- Add green outline(shadow) to a MoviePreview of a movie that is in the database
-- Add a tooltip to the movie title [Tooltips with only CSS](https://blog.logrocket.com/creating-beautiful-tooltips-with-only-css/).
-- Refactor MoviePreview to use `card-shadow` by default (no overwrting `card`)
-- Figure out why `class` works, but `className` does not.
 - <s>FINISH THE NAVBAR DESIGN **June 7**</s>
-- FIISH ALL FRONT-END **June 11**
-- Make it responsive (MoviePreview)
-- Display the number of results as `<h2>` for the Search page.
-- Read about the specifics of using async inside useEffect [article](https://ultimatecourses.com/blog/using-async-await-inside-react-use-effect-hook)
 - <s>API similar crashes when the movie is in the database. Figure out why! **June 9**</s>
-- deep copy `options` with lodash instead of json. **Optional **
-- Move button styles from `MoviePreview.css` to `App.css`
+- <s>Move button styles from `MoviePreview.css` to `App.css`</s>
 - <s>FIX THE MOVIE SEARCH  **June 10**</s>
-
+- <s>Style the login and register forms **June 13**</s>
+- Make everything responsive (sliding menu?) **June 14**
+- Add a tooltip to the movie title [Tooltips with only CSS](https://blog.logrocket.com/creating-beautiful-tooltips-with-only-css/).**Optional**
+- Read about the specifics of using async inside useEffect [article](https://ultimatecourses.com/blog/using-async-await-inside-react-use-effect-hook) **Optional**
+- Figure out why `class` works, but `className` does not.**Optional**
+- deep copy `options` with lodash instead of json. **Optional**
+- Document the project (finished README.MD with a video demo) **June 15**
+- Reasearch hosting options **June 16**
 
 ## Future plans
 - Make more efficient (useMemo instead of useState. Less unnecessary API calls)
