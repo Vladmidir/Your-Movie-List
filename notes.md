@@ -77,7 +77,8 @@
 - Figure out why `class` works, but `className` does not.**Optional**
 - deep copy `options` with lodash instead of json. **Optional**
 - Document the project (finished README.MD with a video demo) **June 15**
-- Reasearch hosting options **June 16**
+- Make a landing page with the project description (can use the README file) **June 16**
+- Reasearch hosting options **June 17**
 
 ## Future plans
 - Make more efficient (useMemo instead of useState. Less unnecessary API calls)

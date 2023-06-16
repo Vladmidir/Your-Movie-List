@@ -19,9 +19,12 @@ export default function Similar({genre, rerender}) {
 
     return (
         <div className='card-flex'>
+            <ul>
                 {genre !== "" && movies.map((movie) => {
-                        return <MoviePreview key={movie.imdb_id} movie={movie} />
+                        return <li><MoviePreview key={movie.imdb_id} movie={movie} /></li>
                     })}
+            </ul>
+                
         </div>
     )
 }

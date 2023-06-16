@@ -1,10 +1,17 @@
-.card-flex {
+.card-flex > ul {
     margin-top: -3em; /* compensate for the grid gap */
     margin-left: 8%;
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: 1fr 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 1em;
     transform: scale(0.8);
-    width: 115%; /*compenste for scale */
+    width: 100%; /*compenste for scale */
+}
+
+@media (max-width: 1000px) {
+    .card-flex > ul {
+        transform: scale(0.9);
+        margin-left: 0;
+        justify-content: center;
+    }
 }

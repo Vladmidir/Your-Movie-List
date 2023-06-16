@@ -94,7 +94,7 @@ export default function Movie() {
             <button className='btn movie-btn' type='submit'>
                 Save
             </button>
-            <button className='btn movie-btn' onClick={() => {setEditing(false); newDescription.current = movie.description}} >
+            <button className='btn btn-outline movie-btn' onClick={() => {setEditing(false); newDescription.current = movie.description}} >
                 Cancel
             </button>
         </form>
@@ -111,12 +111,11 @@ export default function Movie() {
     const localButtons = (
         <div>
             <button className='btn movie-btn' onClick={ setEditing }>Edit</button>
-            <button className='btn movie-btn' onClick={ () => { deleteMovie();}}>Delete</button>
+            <button className='btn btn-outline movie-btn' onClick={ () => { deleteMovie();}}>Remove</button>
         </div>
     )
 
-    //Check whether the movie is in the database and display the according form (add vs edit & delete)
-    //ADD BANNER
+    //Check whether the movie is in the database and display the according form (add vs edit & remove)
     return (
         <div className='movie-container'>
             <div className='movie'>

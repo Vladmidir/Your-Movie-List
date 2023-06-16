@@ -5,7 +5,7 @@
 }
 
 body {
-    margin: 10px 30px;
+    margin: .75rem 2rem;
     background-color: hsl(348, 45%, 98%);
 }
 
@@ -23,16 +23,16 @@ li, a, input, label {
     font-weight: 500;
 }
 
-.hidden-input {
-    display: none;
-}
-
 .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(50vh, 1fr)); /*automatically generate the columns. 
     Minimum size is 50vh (use vh instead of vw because of mobile), max size is as large as it needs to be */
     gap: 1rem;
     align-items: flex-start; /*always at the top and does not fill in the full height */
+}
+
+.hidden-input {
+    display: none;
 }
 
 .btn {
@@ -62,4 +62,25 @@ li, a, input, label {
 
 .btn + .btn { /*very cool sytax trick! */
     margin-left: .25rem;
+}
+
+@media (max-width: 600px) {
+    body {
+        margin: .5rem .75rem;
+    }
+
+    .card-grid {
+        grid-template-columns: repeat(1, 95vw); /*automatically generate the columns. 
+        Minimum size is 50vh (use vh instead of vw because of mobile), max size is as large as it needs to be */
+    }
+}
+
+@media (max-width: 400px) {
+    body {
+        margin: .25rem .5rem;
+    }
+
+    .card-grid {
+        grid-template-columns: repeat(1, 95vw); /* I don't know why 100vw does not span the full width */
+    }
 }

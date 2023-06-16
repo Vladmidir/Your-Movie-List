@@ -130,7 +130,6 @@ exports.search = async (req, res) => {
   try {
       const response = (await axios.request(newOptions)).data.results;
       //KEEPS RETURNING NULL!!!!!111
-      console.log(response)
         const movies = response.map(async (movie) => {
           
           //try to find the movie locally
