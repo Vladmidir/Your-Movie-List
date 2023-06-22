@@ -2,16 +2,30 @@
     margin-top: -3em; /* compensate for the grid gap */
     margin-left: 8%;
     display: flex;
+    justify-content: center;
+
     flex-direction: column;
     gap: 1em;
     transform: scale(0.8);
     width: 100%; /*compenste for scale */
 }
 
-@media (max-width: 1000px) {
+.card-flex > ul > li {
+    flex-basis: 0;
+    flex-grow: 1;
+}
+
+@media(max-width: 1200px) {
     .card-flex > ul {
         transform: scale(0.9);
-        margin-left: 0;
-        justify-content: center;
+        width: 100%;
+        margin-left: 0%;
+        flex-direction: row;
+    }
+}
+
+@media (max-width: 900px) {
+    .card-flex > ul {
+        flex-direction: column;
     }
 }

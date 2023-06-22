@@ -71,17 +71,17 @@
 - <s>Move button styles from `MoviePreview.css` to `App.css`</s>
 - <s>FIX THE MOVIE SEARCH  **June 10**</s>
 - <s>Style the login and register forms **June 13**</s>
-- Make everything responsive (sliding menu?) **June 14**
+- <s>Make everything responsive (sliding menu?) **June 14**</s>
 - Add a tooltip to the movie title [Tooltips with only CSS](https://blog.logrocket.com/creating-beautiful-tooltips-with-only-css/).**Optional**
 - Read about the specifics of using async inside useEffect [article](https://ultimatecourses.com/blog/using-async-await-inside-react-use-effect-hook) **Optional**
 - Figure out why `class` works, but `className` does not.**Optional**
 - deep copy `options` with lodash instead of json. **Optional**
-- Scale MoviePreview for mobile small (320px).
-- For Movie page, medium screen width (800 - 1200px) show title and description to the side, while showing similar at the bottom.
+- <s>Scale MoviePreview for mobile small (320px) *Unnecessary*.</s>
+- <s>For Movie page, medium screen width (800 - 1200px) show title and description to the side, while showing similar at the bottom.</s>
 - Document the project (finished README.MD with a video demo) **June 15**
 - Make a landing page with the project description (can use the README file) **June 16**
 - Push to GitHub **June 16**
-- Read [About React on window resize](https://www.pluralsight.com/guides/re-render-react-component-on-window-resize)
+- <s>Read [About React on window resize](https://www.pluralsight.com/guides/re-render-react-component-on-window-resize)</s>
 - Reasearch hosting options **June 17**
 
 
