@@ -32,6 +32,7 @@
     display: grid;
     grid-template-columns: 150px auto auto;
     transition: 200ms transform ease-in-out; /* smooth out the zoom in */
+    min-width: 300px;
 
 }
 

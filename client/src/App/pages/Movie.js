@@ -6,8 +6,8 @@ import Similar from '../elemets/Similar';
 export default function Movie() {
 
     //get the id from the url parameters
-    let { id } = useParams()
-    const [movie, setMovie] = useState({//data about the movie.
+    const { id } = useParams()
+    const [movie, setMovie] = useState({ //data about the movie.
         id: "", 
         imdb_id: "", 
         title: "", 
@@ -29,6 +29,9 @@ export default function Movie() {
             })
     }, [id, editing])
 
+    
+    //useEffect along with resize to responsively show and hide sliding menu
+    //rember to clean up the even listerners by returning 
 
     /**
      * PUT 
@@ -132,10 +135,10 @@ export default function Movie() {
                     { movie.local ?  (!editing && localButtons) : addForm}
                 </div>
             </div>
-            <div className='similar-section'>
+            <aside className='similar-section'>
                 <h3>Similar Movies</h3>
                 <Similar genre={movie.genre} rerender={movie.title}/>
-            </div>
+            </aside>
         </div>
 
     )

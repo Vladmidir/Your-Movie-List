@@ -1,5 +1,12 @@
 /* styles used across different pages and elemets here */
 
+
+* { /*normalize */
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 *, *::before, *::after {
     font-family: 'Open Sans', sans-serif;
 }
@@ -25,7 +32,7 @@ li, a, input, label {
 
 .card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(50vh, 1fr)); /*automatically generate the columns. 
+    grid-template-columns: repeat(auto-fit, minmax(31vw, 1fr)); /*automatically generate the columns. 
     Minimum size is 50vh (use vh instead of vw because of mobile), max size is as large as it needs to be */
     gap: 1rem;
     align-items: flex-start; /*always at the top and does not fill in the full height */
@@ -64,7 +71,18 @@ li, a, input, label {
     margin-left: .25rem;
 }
 
-@media (max-width: 600px) {
+@media (min-width: 2200px) { /*for the 4K */
+
+    body {
+        margin: 1rem 2.5rem;
+    }
+
+    .card-grid {
+        grid-template-columns: repeat(auto-fit ,minmax(19vw, 1fr));
+    }
+}
+
+@media (max-width: 800px) {
     body {
         margin: .5rem .75rem;
     }

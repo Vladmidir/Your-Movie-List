@@ -76,9 +76,14 @@
 - Read about the specifics of using async inside useEffect [article](https://ultimatecourses.com/blog/using-async-await-inside-react-use-effect-hook) **Optional**
 - Figure out why `class` works, but `className` does not.**Optional**
 - deep copy `options` with lodash instead of json. **Optional**
+- Scale MoviePreview for mobile small (320px).
+- For Movie page, medium screen width (800 - 1200px) show title and description to the side, while showing similar at the bottom.
 - Document the project (finished README.MD with a video demo) **June 15**
 - Make a landing page with the project description (can use the README file) **June 16**
+- Push to GitHub **June 16**
+- Read [About React on window resize](https://www.pluralsight.com/guides/re-render-react-component-on-window-resize)
 - Reasearch hosting options **June 17**
+
 
 ## Future plans
 - Make more efficient (useMemo instead of useState. Less unnecessary API calls)
