@@ -32,14 +32,10 @@ The app allows the user to:
 ### Purpose
 The general purpose of this project was for me to learn how to make a **full-stack** application with a **database (CRUD)** and **user authentication** system.
 
-### Video Demo
+### Video Dem
 
-<figure class="video_container">
- <video controls="true" allowfullscreen="true">
-  <source src="./demo/video/Your%20Movie%20List%20Demo%20Compressed%20Twice.mp4" type="video/mp4">
-  E:\Desktop\Side Projects\Full Stack\movies-api-node-react\demo\video\Your Movie List Demo.mp4
- </video>
-</figure>
+https://github.com/Vladmidir/Your-Movie-List/assets/121591697/5c632312-f4c9-44fc-8f8c-c5ee37178e3f
+
 
 ### Screenshots
 Register
