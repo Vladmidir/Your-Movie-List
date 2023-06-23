@@ -36,7 +36,7 @@ The general purpose of this project was for me to learn how to make a **full-sta
 
 <figure class="video_container">
  <video controls="true" allowfullscreen="true">
-  <source src="./demo/video/Your%20Movie%20List%20Demo.mp4" type="video/mp4">
+  <source src="./demo/video/Your%20Movie%20List%20Demo%20Compressed.mp4" type="video/mp4">
  </video>
 </figure>
 
