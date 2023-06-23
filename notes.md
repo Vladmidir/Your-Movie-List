@@ -79,18 +79,18 @@
 - <s>Scale MoviePreview for mobile small (320px) *Unnecessary*.</s>
 - <s>For Movie page, medium screen width (800 - 1200px) show title and description to the side, while showing similar at the bottom.</s>
 - Document the project (finished README.MD with a video demo) **June 15**
-- Make a landing page with the project description (can use the README file) **June 16**
+- Make a landing page with the project description (can use the README file) *Only need it if I host this* **June 16**
 - Push to GitHub **June 16**
 - <s>Read [About React on window resize](https://www.pluralsight.com/guides/re-render-react-component-on-window-resize)</s>
 - Reasearch hosting options **June 17**
- - Make sure to setup proper session secret if decide to host!
+  - Make sure to setup proper session secret if decide to host!
 
 
 ## Future plans
 - Make more efficient (useMemo instead of useState. Less unnecessary API calls)
 - Add styles, make it look pretty.
 - Add drag and drop (dnd delete, save movies to the list. Drag to trashcan or list icon). DND sorting? Order in the list property?
-- Make it responsive.
+- <s>Make it responsive.</s>
 - <s>refactor to use better API. [Greater movies database](https://rapidapi.com/SAdrian/api/MoviesDatabase/)</s>
 - Make a custom error page
 

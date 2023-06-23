@@ -14,7 +14,7 @@ const bodyParser = require('body-parser'); //for the html forms
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const db = require("./database/index") 
-db.sequelize.sync({force: true})
+db.sequelize.sync({force: false})
   .then(() => {
     console.log("Synced db.");
   })
@@ -40,11 +40,6 @@ app.use(session({
 }))
 app.use(passport.initialize())
 app.use(passport.session()) //this works WITH the express-session
-
-//for development only!
-app.get('/users', async (req, res) => {
-  res.send(await User.findAll())
-})
 
 //Resiter a user
 app.post("/api/register", checkNotAuthenticated ,async (req, res) => {
