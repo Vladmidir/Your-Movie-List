@@ -1,13 +1,11 @@
-//Here we define functions for interacting with the database.
+//Here we define functions for interacting with the local database and the external API.
 
 const db = require("../database/index");
 const Movie = db.Movie;
-const Op = db.Sequelize.Op;
 
 const axios = require('axios');
-const MovieModel = require("../models/Movie.model");
 
-//Set up for the external API 
+//Set up the request template for the external API 
 const BASE_URL = 'https://moviesdatabase.p.rapidapi.com/'
 const options = {
   method: 'GET',
@@ -26,14 +24,16 @@ const options = {
 
 function RapidAPItoMyAPI(movie) {
     //check for null, because the MovieDatabase API has them
-    return  { 
+    return  {
       imdb_id: movie.id, 
       title: movie.originalTitleText.text, 
-      description: movie.plot.plotText.plainText, 
-      rating: movie.ratingsSummary.aggregateRating,
-      banner: movie.primaryImage.url,
-      genre: movie.genres.genres[0].text,//only save one genere. A movie may have multiple genre, 
-      //I just don't want to bother setting up another one-to-many relationship
+      description: (movie.plot !== null && movie.plot.plotText !== null) ? movie.plot.plotText.plainText : "", 
+      rating: movie.ratingsSummary !== null ? movie.ratingsSummary.aggregateRating: 0,
+      banner: movie.primaryImage !== null ? movie.primaryImage.url : "",
+      genre: (movie.genres !== null && 
+        typeof movie.genres.genres[0] !== 'undefined') ? movie.genres.genres[0].text : "",
+        //only save one genere. A movie may have multiple genres, 
+        //I just don't want to bother setting up another one-to-many relationship.
       local: false
     }
 }
@@ -42,7 +42,7 @@ function RapidAPItoMyAPI(movie) {
  * Return the movie object with the id provided from MoviesMiniDB
  * @param {string} movie_id 
  */
-async function findOneMoviesMiniDB(movie_id) { //RENAME TO MOVIES RAPID
+async function findOneMoviesMiniDB(movie_id) {
   const newOptions =  JSON.parse(JSON.stringify(options)) //ideally change this to lodash
 
   const url = "titles/" + movie_id
@@ -51,27 +51,16 @@ async function findOneMoviesMiniDB(movie_id) { //RENAME TO MOVIES RAPID
   try {
       const results = (await axios.request(newOptions)).data.results;
       //format the results from external API
-      movieExternal = {
-        imdb_id: results.id, 
-          title: results.originalTitleText.text, 
-          description: results.plot !== null ? results.plot.plotText.plainText : "", 
-          rating: results.ratingsSummary !== null ? results.ratingsSummary.aggregateRating: 0,
-          banner: results.primaryImage !== null ? results.primaryImage.url : "",
-          genre: results.genres !== null ? results.genres.genres[0].text : "",//only save one genere. A movie may have multiple genre, 
-          //I just don't want to bother setting up another one-to-many relationship
-          local: false
-      }
+      movieExternal = RapidAPItoMyAPI(results)
       return(movieExternal)
   } catch (error) {
       console.error(error);
   }
 }
 
-
 exports.findTop50 = async (req, res) => {
   //set up a custom url for the API
-  
-  const newOptions =  JSON.parse(JSON.stringify(options))
+  const newOptions = JSON.parse(JSON.stringify(options))
 
   const url = "titles/"
   newOptions.url += url
@@ -98,16 +87,7 @@ exports.findTop50 = async (req, res) => {
         }
         //if not in the local, format and return the response data
         //Send the data from MoviesDatabase
-        movieExternal = {
-          imdb_id: movie.id, 
-          title: movie.originalTitleText.text, 
-          description: movie.plot.plotText.plainText, 
-          rating: movie.ratingsSummary.aggregateRating,
-          banner: movie.primaryImage.url,
-          genre: movie.genres.genres[0].text,//only save one genere. A movie may have multiple genre, 
-          //I just don't want to bother setting up another one-to-many relationship
-          local: false
-        }
+        movieExternal = RapidAPItoMyAPI(movie)
         return movieExternal
       })
       //send the response from external API
@@ -118,9 +98,9 @@ exports.findTop50 = async (req, res) => {
 }
 
 exports.search = async (req, res) => {
-  const newOptions =  JSON.parse(JSON.stringify(options))
-
   //set up a custom url for the API
+  const newOptions = JSON.parse(JSON.stringify(options))
+
   const url = "titles/search/title/" + req.query.title
   newOptions.url += url
   newOptions.params.exact = false
@@ -129,44 +109,30 @@ exports.search = async (req, res) => {
   //fetch the data
   try {
       const response = (await axios.request(newOptions)).data.results;
-      //KEEPS RETURNING NULL!!!!!111
-        const movies = response.map(async (movie) => {
-          
-          //try to find the movie locally
-          movieLocal = await Movie.findOne({
-            where: {
-              imdb_id: movie.id,
-              UserId: req.user.id
-            }
-          })
-          //if found a movie in local db, return that
-          if(movieLocal != null){
-            movieLocalJson = movieLocal.toJSON()
-            movieLocalJson.local = true
-            return movieLocalJson
+      const movies = response.map(async (movie) => {
+        
+        //try to find the movie locally
+        movieLocal = await Movie.findOne({
+          where: {
+            imdb_id: movie.id,
+            UserId: req.user.id
           }
-          //if not in the local, format and return the response data
-          //Send the data from MoviesDatabase
-          //console.log(movie.plot.plotText.plainText)
-          movieExternal = {
-            imdb_id: movie.id, 
-            title:  movie.originalTitleText !== null ? movie.originalTitleText.text : "", 
-            description: (movie.plot !== null && movie.plot.plotText !== null) ? movie.plot.plotText.plainText : "", 
-            rating: movie.ratingsSummary !== null ? movie.ratingsSummary.aggregateRating: 0,
-            banner: movie.primaryImage !== null ? movie.primaryImage.url : "",
-            genre: (movie.genres !== null && movie.genres.genres[0] !== undefined) ? movie.genres.genres[0].text : "",//only save one genere. A movie may have multiple genre, 
-            //I just don't want to bother setting up another one-to-many relationship
-            local: false
-          }
-
-          return movieExternal
         })
-             
-      //send the response from external API
-
+        //if found a movie in local db, add that
+        if(movieLocal != null){
+          movieLocalJson = movieLocal.toJSON()
+          movieLocalJson.local = true
+          return movieLocalJson
+        }
+        //if not in the local, add the data from MoviesDatabase
+        movieExternal = RapidAPItoMyAPI(movie)
+        return movieExternal
+      })
+      //send the movie found
       res.json(await Promise.all(movies))
   } catch (error) {
-      console.error(error);
+    //maybe I should send http error codes here...
+    console.error(error);
   }
 }
 
@@ -186,7 +152,6 @@ exports.similar = async (req, res) => {
   try {
       const response = (await axios.request(newOptions)).data.results;
 
-      //MAKE THIS MAP INTO A UTILITY FUNCTION
       const movies = response.map(async (movie) => {
         //try to find the movie locally
         movieLocal = await Movie.findOne({
@@ -196,31 +161,21 @@ exports.similar = async (req, res) => {
           }
         })
 
-        //if found a movie in local db, return that
+        //if found a movie in local db, add that
         if(movieLocal != null){
           movieLocalJson = movieLocal.toJSON()
           movieLocalJson.local = true
           return movieLocalJson
         }
-        //if not in the local, format and return the response data
-        //Send the data from MoviesDatabase
-        movieExternal = {
-          imdb_id: movie.id, 
-          title: movie.originalTitleText.text, 
-          description: movie.plot !== null ? movie.plot.plotText.plainText : "", 
-          rating: movie.ratingsSummary !== null ? movie.ratingsSummary.aggregateRating: 0,
-          banner: movie.primaryImage !== null ? movie.primaryImage.url : "",
-          genre: movie.genres !== null ? movie.genres.genres[0].text : "",//only save one genere. A movie may have multiple genre, 
-          //I just don't want to bother setting up another one-to-many relationship
-          local: false
-        }
+        //if not in the local, format and add the data from MoviesDatabase
+        movieExternal = RapidAPItoMyAPI(movie)
         return movieExternal
       })
-      //send the response from external API
+      //send the movies found
       res.json(await Promise.all(movies))
   } catch (error) {
       console.error(error);
-      res.json({})
+      res.json({}) //to prevent crashes
   }
 }
 
@@ -286,13 +241,13 @@ exports.findOne = async (req, res) => {
   res.send(await findOneMoviesMiniDB(movie_id))
 };
 
-// Update a Movie by the id in the request
+// Update a Movie with the id specified
 exports.update = async (req, res) => {
   try {
     Movie.update({ description: req.body.description }, {
       where: {
         UserId: req.user.id,
-        imdb_id: req.body.imdb_id //THIS MAY CAUSE BUGS. MAKE SURE TO PASS THE ID PROPERTY
+        imdb_id: req.body.imdb_id
       }
     });
     res.status(200).send()
@@ -303,7 +258,7 @@ exports.update = async (req, res) => {
   
 };
 
-// Delete a Movie with the specified id in the request
+// Delete a Movie with the specified id
 exports.delete = async (req, res) => {
   const movie_id = req.params.id
   await Movie.destroy({
@@ -313,11 +268,10 @@ exports.delete = async (req, res) => {
     }
   });
 
-  //return the MoviesMiniDatabse movie as response
+  //return the MoviesDatabase movie as a response
   res.send(await findOneMoviesMiniDB(movie_id))
 
 };
-
 
 // Delete all Movies from the database.
 exports.deleteAll = (req, res) => {

@@ -3,17 +3,18 @@ import { useLocation } from 'react-router-dom';
 import MoviePreview from '../elemets/MoviePreview'
 import "./Search.css"
 
-export default function Search({user}) {
+export default function Search() {
 
     const [results, setResults] = useState([])
     
+    //cutom hook. Documenting this late. Not sure why excatly we need it.
     function useQuery() {
         const { search } = useLocation();
-      
+        
         return React.useMemo(() => new URLSearchParams(search), [search]);
     }
 
-    let query = useQuery(); //this returns a meme (the value is saved between rerenders)
+    let query = useQuery(); //this returns a memo (the value is saved between rerenders)
     React.useEffect(() => {
         fetch('/api/movie/search?' + query).then((res) => res.json()).then(async (data) => {
             setResults(data)

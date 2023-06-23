@@ -1,6 +1,6 @@
 const {Sequelize, Op, Model, DataTypes} = require('sequelize')
 
-//create a sqlite database
+//create an sqlite database
 const sequelize = new Sequelize({
     dialect: 'sqlite',
     storage: './server/database/database.sqlite',
@@ -22,5 +22,5 @@ db.User = require("../models/User.model")(sequelize, Sequelize)
 db.User.hasMany(db.Movie)
 db.Movie.belongsTo(db.User)
 
-//what is the difference between this and export default?
+//what is the difference between module.exports and export default?
 module.exports = db

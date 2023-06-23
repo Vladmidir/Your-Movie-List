@@ -83,6 +83,7 @@
 - Push to GitHub **June 16**
 - <s>Read [About React on window resize](https://www.pluralsight.com/guides/re-render-react-component-on-window-resize)</s>
 - Reasearch hosting options **June 17**
+ - Make sure to setup proper session secret if decide to host!
 
 
 ## Future plans

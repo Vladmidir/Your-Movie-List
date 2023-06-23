@@ -19,7 +19,7 @@ export default function Movie() {
         local: false}) 
     const [editing, setEditing] = useState(false) //whether the movie data is currently being edited.
     const [rerender, doRerender] = useState(false) //simply rerenders the page.
-    const newDescription = useRef("") //I am not sure if I actually need this. Easier so I dont have to setMovie every time.
+    const newDescription = useRef("") //I am not sure if I actually need this. Keep it so I dont have to setMovie every time.
 
     //fetch the info from the API based on the ID. 
     useEffect(() => {
@@ -29,12 +29,9 @@ export default function Movie() {
             })
     }, [id, editing])
 
-    
-    //useEffect along with resize to responsively show and hide sliding menu
-    //rember to clean up the even listerners by returning 
 
     /**
-     * PUT 
+     * Edit the movie description in the database 
      */
     async function putMovie() {
         const movieData = {
@@ -59,7 +56,9 @@ export default function Movie() {
             console.log(err);
         }
     }
-
+    /**
+     * Delete the movie from the database. Reset the description.
+     */
     async function deleteMovie() {
         await fetch("/api/movie/" + movie.imdb_id, { method: "delete" }).then((res) => res.json()).then((data) => {
             setMovie(data)
@@ -68,7 +67,7 @@ export default function Movie() {
         })
     }
 
-    // "add" button that sends a POST request with movie's data to the server, adding it to the database (user's list in the future.)
+    // "add" button that sends a POST request with movie's data to the server, adding it to the database.
     const addForm = (
         <form action='/api/movie' method='POST' >
             <input className='hidden-input' name='imdb_id' type='string' value={ movie.imdb_id } readOnly/>
@@ -103,6 +102,7 @@ export default function Movie() {
         </form>
     )
 
+    //Description of the movie
     const movieBody = (
         <div className='movie-body'>
             <h3>Description:</h3>
@@ -110,7 +110,7 @@ export default function Movie() {
         </div>
     )
     
-    //Buttons to display for when the movie is local (added to the list)
+    //Buttons to display for when the movie is local (saved to the list)
     const localButtons = (
         <div>
             <button className='btn movie-btn' onClick={ setEditing }>Edit</button>
@@ -118,7 +118,6 @@ export default function Movie() {
         </div>
     )
 
-    //Check whether the movie is in the database and display the according form (add vs edit & remove)
     return (
         <div className='movie-container'>
             <div className='movie'>
@@ -127,11 +126,12 @@ export default function Movie() {
                     <h2>{ movie.title }</h2>
                     { movie.local && <div>In the list!</div> }
                 </div>
+                {/* Check whether the movie is being edited and display the corresponding element */}
                 { editing ? editForm : movieBody}
 
                 <div className='movie-footer'>
                     <span>Rating: {movie.rating}</span>
-
+                    {/* Check whether the movie is in the database and display the according form (add vs edit & remove) */}
                     { movie.local ?  (!editing && localButtons) : addForm}
                 </div>
             </div>
@@ -140,6 +140,5 @@ export default function Movie() {
                 <Similar genre={movie.genre} rerender={movie.title}/>
             </aside>
         </div>
-
     )
 }

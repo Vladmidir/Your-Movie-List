@@ -14,7 +14,7 @@ const bodyParser = require('body-parser'); //for the html forms
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const db = require("./database/index") 
-db.sequelize.sync({force: false})
+db.sequelize.sync({force: true})
   .then(() => {
     console.log("Synced db.");
   })
@@ -23,7 +23,6 @@ db.sequelize.sync({force: false})
 });
 
 const User = db.User //User model
-
 
 //Set up user authentication and sessions
 const initializePassport = require('./passport-config')
@@ -41,7 +40,6 @@ app.use(session({
 }))
 app.use(passport.initialize())
 app.use(passport.session()) //this works WITH the express-session
-//app.use(flash())
 
 //for development only!
 app.get('/users', async (req, res) => {
@@ -51,23 +49,21 @@ app.get('/users', async (req, res) => {
 //Resiter a user
 app.post("/api/register", checkNotAuthenticated ,async (req, res) => {
   //check that the username is not taken
-
-  user = await User.findOne({where: {name: req.body.name}})
+  const user = await User.findOne({where: {name: req.body.name}})
 
   if (user != null ){
       //user already exists
-      //WE WANT TO FLASH ERROR HERE. HOW DO I DO THAT? URL PARAMS?
       return res.status(409).send({message: "username already exists"})
   }
 
   HashedPass = await bcrypt.hash(req.body.password, 10)
 
-  user = {
+  newUser = {
       name: req.body.name,
       password: HashedPass
   }
 
-  await User.create(user)
+  await User.create(newUser)
 
   return res.status(201).send()
 })
@@ -92,6 +88,7 @@ app.post("/api/logout",(req, res) => {
     });
 });
 
+//for the client to check authentication status
 app.get("/api/authenticated", async (req, res) => {
   if(req.isAuthenticated()) {
     return res.status(200).send({id: req.user.id, name: req.user.name})
@@ -104,20 +101,20 @@ const movies = require("./routes/Movie.router.js")
 app.use('/api/movie', checkAuthenticated, movies)
 
 //uncomment for production
-//app.use(express.static(path.resolve(__dirname, "../client/build")))
+app.use(express.static(path.resolve(__dirname, "../client/build")))
 
-//uncomment for production
 //Send all non-api requests to the React app.
-//app.get("*", (req, res) => {
-//  res.sendFile(path.resolve(__dirname, "../client/build", "index.html"))
-//})
+//uncomment for production
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../client/build", "index.html"))
+})
 
 app.listen(PORT, () => {
     console.log(`Server Listening on ${PORT}`)
 })
 
 
-//middleware functions!
+//middleware functions
 function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { //fucntion from passport (true if authenticated, false otherwise)
       return next() //everything works! We can run safely.

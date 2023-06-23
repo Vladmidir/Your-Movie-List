@@ -18,6 +18,7 @@ export default function Login() {
         const password = passwordElem.value
         
         try {
+            //try to login
             const res = await fetch('/api/login/', {
                 method: "post",
                 headers: {
@@ -35,6 +36,7 @@ export default function Login() {
                 nameElem.classList.add("error-input")
                 setMessage("invalid credentials")
             }else {
+                //redirect to homepage
                 window.location.href = './' //can use ancor tag instead? if yes, how?
             }
         }
@@ -43,7 +45,7 @@ export default function Login() {
         }
     }
 
-
+    //hide all the error highlights and messages
     async function hideErr() {
         if (message !== "") {
             const password = await document.getElementById('password')

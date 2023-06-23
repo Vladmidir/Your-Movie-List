@@ -33,7 +33,7 @@ li, a, input, label {
 .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(30vw, 1fr)); /*automatically generate the columns. 
-    Minimum size is 50vh (use vh instead of vw because of mobile), max size is as large as it needs to be */
+    Minimum size is 30vw, max size is as large as it needs to be */
     gap: 1rem;
     align-items: flex-start; /*always at the top and does not fill in the full height */
 }
@@ -67,7 +67,7 @@ li, a, input, label {
     background: hsl(200, 50%, 90%);
 }
 
-.btn + .btn { /*very cool sytax trick! */
+.btn + .btn { /* very cool syntax trick! */
     margin-left: .25rem;
 }
 

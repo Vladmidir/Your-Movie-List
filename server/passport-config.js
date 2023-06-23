@@ -24,7 +24,7 @@ function initialize(passport, getUserByName, getUserById){
         }
     }
 
-    //tell it to use "name" as the default username field
+    //Use "name" as the default username field
     passport.use(new LocalStrategy({usernameField: "name"}, authenticateUser))
 
     passport.serializeUser((user, cb) => {

@@ -4,8 +4,7 @@ import './List.css'
 
 function List() {
 
-
-    const [movies, setMovies] = React.useState([]) //useMemo instead?
+    const [movies, setMovies] = React.useState([])
 
     //get all movies saved by the user.
     React.useEffect(() => {
@@ -14,6 +13,7 @@ function List() {
         })
     }, [])
 
+    //sort the movies based on the values in the sort form
     async function sortMovies() {
         const property = await document.getElementById('property').value
         const order = await document.getElementById('order').value
@@ -39,7 +39,6 @@ function List() {
             const temp = sortedMovies.map((m) => m)
             setMovies(temp.reverse())
         }
-
     }
 
     return (

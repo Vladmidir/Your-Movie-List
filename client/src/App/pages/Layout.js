@@ -6,12 +6,11 @@ import closeMenuIcon from '../images/icon-menu-close.svg'
 
  function Layout({user}) {
 
-    const [screenWidth, setScreenWidth] = useState(window.innerWidth)//get width here
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth)//window width
+    
+    const [menuOpen, setMenuOpen] = useState(false) //menu status (open, closed)
+
     //update the width on resize
-    const [menuOpen, setMenuOpen] = useState(false)
-
-
-    //keep track of the window width
     React.useEffect(() => {
         function handleResize() {
           setScreenWidth(window.innerWidth)
@@ -23,6 +22,7 @@ import closeMenuIcon from '../images/icon-menu-close.svg'
          }
       })
 
+    //desktop version of the form
     const logoutForm = 
         <form className='logout-form' method='POST' action='/api/logout'>
             <label>
@@ -32,17 +32,17 @@ import closeMenuIcon from '../images/icon-menu-close.svg'
             <button className='btn btn-outline header-btn'>Logout</button>
         </form>
 
-    //Opens the profile menu
+    //Opens the profile menu (mobile)
     const menuBtn = 
         <button className='side-menu-btn' onClick={() => setMenuOpen(true)}>
             <img src={userIcon} alt='open profile' />
         </button>
-    //Closes the profile menu
+    //Closes the profile menu (mobile)
     const closeMenuBtn = 
         <button className='side-menu-btn' onClick={() => setMenuOpen(false)}>
             <img src={closeMenuIcon} alt='close menu' />
         </button>
-    //The profile menu
+    //The profile menu (mobile)
     const sideMenu = <div className='side-menu'>
         <form className='logout-form' method='POST' action='/api/logout'>
             <label>
@@ -69,10 +69,11 @@ import closeMenuIcon from '../images/icon-menu-close.svg'
                 <input type='search' name='title' placeholder='Search...'/>
                 <button className='btn header-btn'>Search</button>
             </form>
-
-            {screenWidth <= 900 ? (menuOpen ? closeMenuBtn : menuBtn)  : logoutForm}
+            {/* Show desktop or the according mobile menu depending on screen width */}
+            {screenWidth <= 900 ? (menuOpen ? closeMenuBtn : menuBtn)  : logoutForm} 
             
         </header>
+        {/* If the menu is open, show it */}
         {menuOpen && sideMenu}
         <Outlet />
         </>

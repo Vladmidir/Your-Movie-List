@@ -50,6 +50,7 @@ export default function Register() {
                 nameElement.classList.add('error-input')
                 setMessage((await res.json()).message)
             }else {
+                //redirect to login
                 window.location.href = './login' //can use ancor tag instead? if yes, how?
             }
         }
@@ -58,6 +59,7 @@ export default function Register() {
         }
     }
 
+    /**Hide the password error*/
     async function passwordHideErr() {
         if (passwordMessage !== "") {
             const password = await document.getElementById('password-confirm')
@@ -65,7 +67,7 @@ export default function Register() {
             setPasswordMessage("")
         }
     }
-
+    /**Hide the username error*/
     async function usernameHideErr() {
         if (message !== "") {
             const name  = await document.getElementById('your-movie-list-name')
@@ -92,7 +94,7 @@ export default function Register() {
                     </div>
                     <div>
                         <label htmlFor="password">Password</label><br/>
-                        <input className='auth-input' type="password" name="password" id='password' placeholder="password" required />
+                        <input className='auth-input' onChange={passwordHideErr} type="password" name="password" id='password' placeholder="password" required />
                     </div>
                     <div>
                         <label htmlFor="password">Confirm password</label><br/>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef} from 'react';
+import React, { useState } from 'react';
 import {createBrowserRouter, RouterProvider, redirect} from 'react-router-dom'
 import './App.css'
 import Home from './pages/Home'
@@ -11,8 +11,10 @@ import Register from './pages/Register'
 
 function App() {
 
+  //user that is currently logged in
   const [user,setUser] = useState({id: "", name: ""})
 
+  /**Check the Authetication status and act accordingly */
   async function checkAuth() {
     const authenticated =  await fetch('/api/authenticated', {credentials: 'include'})
 
@@ -25,13 +27,11 @@ function App() {
         }})
       return null
     }
+      //not authenticated, must login
       return redirect("/login")
-    
   }
 
-  /**
-   * Redirect to homepage if authenticated tries to login/register
-   */
+  /**Redirect to homepage if authenticated tries to login/register*/
   async function checkNotAuth() {
     const authenticated =  await fetch('/api/authenticated', {credentials: 'include'})
 
@@ -39,7 +39,6 @@ function App() {
       return redirect("/")
     }
       return null
-    
   }
 
   //add `errorElement: <ErrorPage />` to each route
@@ -51,7 +50,7 @@ function App() {
       children: [
         {
           path: '',
-          element: <Home user={user} />
+          element: <Home />
         },
         {
           path: 'movie/:id',
