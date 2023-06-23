@@ -32,7 +32,7 @@ The app allows the user to:
 ### Purpose
 The general purpose of this project was for me to learn how to make a **full-stack** application with a **database (CRUD)** and **user authentication** system.
 
-### Video Dem
+### Video Demo
 
 https://github.com/Vladmidir/Your-Movie-List/assets/121591697/5c632312-f4c9-44fc-8f8c-c5ee37178e3f
 
