@@ -36,7 +36,8 @@ The general purpose of this project was for me to learn how to make a **full-sta
 
 <figure class="video_container">
  <video controls="true" allowfullscreen="true">
-  <source src="./demo/video/Your%20Movie%20List%20Demo%20Compressed.mp4" type="video/mp4">
+  <source src="./demo/video/Your%20Movie%20List%20Demo%20Compressed%20Twice.mp4" type="video/mp4">
+  E:\Desktop\Side Projects\Full Stack\movies-api-node-react\demo\video\Your Movie List Demo.mp4
  </video>
 </figure>
 

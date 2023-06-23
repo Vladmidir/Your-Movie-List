@@ -119,3 +119,6 @@
     //Show the form only when clicked the editing button (make it a button yes)
     //Editing form should have a text field with editable description, ?custom rating (later)?,
     //followed by <button method="PUT">save changes</button> and <button redirectBack >cancel</button>
+
+## To remove a file from git history :
+git filter-branch --index-filter 'git rm -rf --cached --ignore-unmatch file-name' HEAD
