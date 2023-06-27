@@ -1,5 +1,5 @@
 # Your Movie List
-Save your favorite movies and add give them your own description!
+Save your favorite movies and give them your own description!
 
 ## Table of contents
 
