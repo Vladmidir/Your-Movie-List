@@ -3,7 +3,7 @@ const express = require("express")
 const bcrypt = require("bcrypt")
 const passport = require("passport")
 const session = require("express-session")
-const PORT = process.env.PORT || 8000
+const PORT = process.env.PORT || 8080
 
 
 //create our app and our database
@@ -41,7 +41,7 @@ app.use(passport.initialize())
 app.use(passport.session()) //this works WITH the express-session
 
 //Resiter a user
-app.post("/api/register", checkNotAuthenticated ,async (req, res) => {
+app.post("/api/register", checkNotAuthenticated, async (req, res) => {
   //check that the username is not taken
   const user = await User.findOne({where: {name: req.body.name}})
   if (user != null ){
@@ -60,12 +60,12 @@ app.post("/api/register", checkNotAuthenticated ,async (req, res) => {
 })
 
 //Login the user. With middleware to send error messages
-app.post("/api/login", checkNotAuthenticated ,passport.authenticate('local', {
+app.post("/api/login", checkNotAuthenticated, passport.authenticate('local', {
   successRedirect: '/',
 }))
 
 //Logout the user 
-app.post("/api/logout",(req, res) => {
+app.post("/api/logout", (req, res) => {
   //make sure the user is logged in
   if (!req.isAuthenticated()) { 
     return  res.status(401).redirect('/login')

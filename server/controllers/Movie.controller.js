@@ -179,18 +179,18 @@ exports.similar = async (req, res) => {
   }
 }
 
-//#END EXTERNAL API INTERFACE#
+//#END OF THE EXTERNAL API INTERFACE#
 
 // Create and Save a new Movie
 exports.create = (req, res) => {
    // Validate request
    if (!req.body.title) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Title can not be empty!"
     });
     return;
   }
-  // Create a Movie. Would have to add UserId here. (Notice that the movie id is added automatically)
+  // Create a Movie. Add the UserId here.
   const newMovie = {
     title: req.body.title,
     description: req.body.description,
@@ -201,7 +201,7 @@ exports.create = (req, res) => {
     UserId: req.user.id
   };
 
-  // Save Movie in the database
+  // Save the Movie in the database
   Movie.create(newMovie)
     .then(data => {
       //redirect back to the Movie's page

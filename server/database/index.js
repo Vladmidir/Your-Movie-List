@@ -14,7 +14,7 @@ const db = {}
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-//pass the sequelize objects to the Movie Model
+//remember to pass the `sequelize` objects to the models
 db.Movie = require("../models/Movie.model")(sequelize, Sequelize)
 db.User = require("../models/User.model")(sequelize, Sequelize)
 
