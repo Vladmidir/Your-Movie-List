@@ -81,32 +81,58 @@ Check the `http://localhost:8080/` or the port displayed in your terminal.
 
 https://github.com/Vladmidir/Your-Movie-List/assets/121591697/5c632312-f4c9-44fc-8f8c-c5ee37178e3f
 
-
 ### Screenshots
-Register
+<details>
+<summary>Register</summary>
+
 ![register](./demo/screenshots/register.jpg)
-Homepage
+</details>
+
+<details>
+<summary>Homepage</summary>
+
 ![homepage](./demo/screenshots/homepage.jpg)
-Movie Page
+</details>
+
+<details>
+<summary>Movie Page</summary>
+
 ![movie page](./demo/screenshots/movie.jpg)
-Saved Movie
+</details>
+
+<details>
+<summary>Saved Movie</summary>
+
 ![saved movie](./demo//screenshots/saved-movie.jpg)
-My List
+</details>
+
+<details>
+<summary>My List</summary>
+
 ![my list](./demo/screenshots/my-list.jpg)
-Movie Page Mobile
+</details>
+
+<details>
+<summary>Movie Page Mobile</summary>
+
 ![movie page mobile](./demo//screenshots/movie-mobile.jpg)
-Homepage Mobile
+</details>
+
+<details>
+<summary>Homepage Mobile</summary>
+
 ![homepage mobile](./demo/screenshots/home-mobile.jpg)
+</details>
 
 
 ## About the project
 
 ### Built with
-- Node JS (express) ADD LINKS HERE
-- React (React Router)
-- Sequelize ORM (sqlite3)
-- HTML
-- CSS
+- [Node JS (express)](https://expressjs.com/)
+- [React](https://react.dev/) & [React Router](https://reactrouter.com/en/main)
+- [Sequelize ORM (sqlite3)](https://sequelize.org/)
+- [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
+- [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
 
 ### Project structure
 The project uses React client-side rendering along with an Express server.
