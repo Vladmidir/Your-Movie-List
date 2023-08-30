@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import "./MoviePreview.css"
+import "./element-styles/MoviePreview.css"
 
 /**
  * Has a link to the Movie Route (Movie's page)

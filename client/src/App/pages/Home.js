@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import MoviePreview from '../elemets/MoviePreview'
-import './Home.css'
+import './page-styles/Home.css'
 
 export default function Home() {
 

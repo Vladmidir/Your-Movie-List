@@ -5,12 +5,13 @@ Save your favorite movies and give them your own description!
 
 - [Overview](#overview)
   - [Functionality](#functionality)
-  - [Purpose](#purpose)
+  - [Installation](#installation)
   - [Video Demo](#video-demo)
   - [Screenshots](#screenshots)
 - [About the Project](#about-the-project)
   - [Built with](#built-with)
   - [Project structure](#project-structure)
+  - [Purpose](#purpose)
   - [Continued development](#continued-development)
 - [My Process](#my-process)
     - [Inspiration](#inspiration)
@@ -29,8 +30,52 @@ The app allows the user to:
  - Edit the description of the movie that they saved
  - Delete movies from their account (description is reset to default)
 
-### Purpose
-The general purpose of this project was for me to learn how to make a **full-stack** application with a **database (CRUD)** and **user authentication** system.
+### Installation
+
+Make sure to have npm installed
+
+Clone the repository 
+```bash
+git clone https://github.com/Vladmidir/Your-Movie-List.git
+cd Your-Movie-List
+```
+
+Install the dependencies
+
+```bash
+npm install
+```
+
+CD into the client folder, install client dependencies, and build the react app
+```bash
+cd client
+npm install
+npm run build
+cd ..
+```
+
+Create a [RapidAPI](https://rapidapi.com/) account and get a RapidAPI Movies Database key from [here](https://rapidapi.com/SAdrian/api/MoviesDatabase/).
+
+Add your RapidAPI key to a `.env` file and source it
+
+> ./server/.env
+>```
+> export RAPIDAPI_KEY='yourkey'
+>```
+
+
+```bash
+source ./server/.env
+```
+
+From the project root folder start the server
+
+```bash
+npm start
+```
+
+Check the `http://localhost:8080/` or the port displayed in your terminal.
+
 
 ### Video Demo
 
@@ -88,6 +133,9 @@ After finishing the project I am slightly concerned that the API I have implemen
 I am not sure whether I can call the API I have implemented RESTful for two reasons:
 1. I am worried that passport.js middleware counts as a server state (a REST server has to be stateless).
 2. I suspect that displaying varying movie pages for different users (different descriptions) violates the uniformity principle of REST.
+
+### Purpose
+The general purpose of this project was for me to learn how to make a **full-stack** application with a **database (CRUD)** and **user authentication** system.
 
 ### Continued Development
 One feature that could make sense and would make a good challenge is adding the ability for a user to send friend requests to others and view their friend's movie lists.

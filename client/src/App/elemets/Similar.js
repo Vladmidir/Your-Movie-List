@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import MoviePreview from './MoviePreview';
-import "./Similar.css"
+import "./element-styles/Similar.css"
 
 export default function Similar({genre, rerender}) {
     
@@ -13,7 +13,6 @@ export default function Similar({genre, rerender}) {
                 setMovies(await data)
             })
         }
-        
     }, [genre, rerender])
 
     return (

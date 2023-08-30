@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {Link, Outlet} from 'react-router-dom'
-import './Layout.css'
+import './page-styles/Layout.css'
 import userIcon from '../images/user-solid.svg'
 import closeMenuIcon from '../images/icon-menu-close.svg'
 

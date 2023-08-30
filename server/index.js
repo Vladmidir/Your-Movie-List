@@ -3,8 +3,7 @@ const express = require("express")
 const bcrypt = require("bcrypt")
 const passport = require("passport")
 const session = require("express-session")
-//const flash = require("express-flash") UNINSTALL
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 8000
 
 
 //create our app and our database
@@ -45,19 +44,16 @@ app.use(passport.session()) //this works WITH the express-session
 app.post("/api/register", checkNotAuthenticated ,async (req, res) => {
   //check that the username is not taken
   const user = await User.findOne({where: {name: req.body.name}})
-
   if (user != null ){
       //user already exists
       return res.status(409).send({message: "username already exists"})
   }
 
   HashedPass = await bcrypt.hash(req.body.password, 10)
-
   newUser = {
       name: req.body.name,
       password: HashedPass
   }
-
   await User.create(newUser)
 
   return res.status(201).send()
@@ -106,12 +102,13 @@ app.get("*", (req, res) => {
 
 app.listen(PORT, () => {
     console.log(`Server Listening on ${PORT}`)
+    console.log(`http://localhost:${PORT}`)
 })
 
 
 //middleware functions
 function checkAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { //fucntion from passport (true if authenticated, false otherwise)
+  if (req.isAuthenticated()) { //function from passport (true if authenticated, false otherwise)
       return next() //everything works! We can run safely.
   }
 

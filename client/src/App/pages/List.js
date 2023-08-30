@@ -1,6 +1,6 @@
 import React from 'react';
 import MoviePreview from '../elemets/MoviePreview';
-import './List.css'
+import './page-styles/List.css'
 
 function List() {
 

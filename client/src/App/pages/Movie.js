@@ -1,6 +1,6 @@
 import { React, useEffect, useState, useRef} from 'react';
 import { useParams } from 'react-router-dom';
-import "./Movie.css"
+import "./page-styles/Movie.css"
 import Similar from '../elemets/Similar';
 
 export default function Movie() {

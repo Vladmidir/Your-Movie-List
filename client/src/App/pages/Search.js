@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import MoviePreview from '../elemets/MoviePreview'
-import "./Search.css"
+import "./page-styles/Search.css"
 
 export default function Search() {
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {Link} from 'react-router-dom'
-import "./Authentication.css"
+import "./page-styles/Authentication.css"
 
 export default function Register() {
 
