@@ -68,7 +68,7 @@ export default function Movie() {
     }
 
     // "add" button that sends a POST request with movie's data to the server, adding it to the database.
-    const addForm = (
+    const AddForm = () =>
         <form action='/api/movie' method='POST' >
             <input className='hidden-input' name='imdb_id' type='string' value={ movie.imdb_id } readOnly/>
             <input className='hidden-input' name='title' type='string' value={ movie.title } readOnly/>
@@ -78,12 +78,12 @@ export default function Movie() {
             <input className='hidden-input' name='banner' type='text' value={ movie.banner } readOnly/>
             <input className='hidden-input' name='genre' type='text' value={ movie.genre } readOnly/>
 
-
             <button className='btn movie-btn'>Add</button>
-        </form>)
+        </form>
+
 
     //form for editing the movie description
-    const editForm = (
+    const EditForm = () =>
         <form className='edit-form' onSubmit={(e) => { e.preventDefault(); putMovie(); setEditing(false) }}>
             <label htmlFor='description'><h3>Description:</h3></label>
             <textarea
@@ -100,23 +100,23 @@ export default function Movie() {
                 Cancel
             </button>
         </form>
-    )
+    
 
     //Description of the movie
-    const movieBody = (
+    const MovieBody = () =>
         <div className='movie-body'>
             <h3>Description:</h3>
             <p> {movie.description} </p>
         </div>
-    )
+    
     
     //Buttons to display for when the movie is local (saved to the list)
-    const localButtons = (
+    const LocalButtons = () =>
         <div>
             <button className='btn movie-btn' onClick={ setEditing }>Edit</button>
             <button className='btn btn-outline movie-btn' onClick={ () => { deleteMovie();}}>Remove</button>
         </div>
-    )
+    
 
     return (
         <div className='movie-container'>
@@ -127,12 +127,12 @@ export default function Movie() {
                     { movie.local && <div>In the list!</div> }
                 </div>
                 {/* Check whether the movie is being edited and display the corresponding element */}
-                { editing ? editForm : movieBody}
+                { editing ? <EditForm /> : <MovieBody /> }
 
                 <div className='movie-footer'>
                     <span>Rating: {movie.rating}</span>
                     {/* Check whether the movie is in the database and display the according form (add vs edit & remove) */}
-                    { movie.local ?  (!editing && localButtons) : addForm}
+                    { movie.local ?  (!editing && <LocalButtons />) : <AddForm />}
                 </div>
             </div>
             <aside className='similar-section'>

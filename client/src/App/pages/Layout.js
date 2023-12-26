@@ -23,7 +23,7 @@ import closeMenuIcon from '../images/icon-menu-close.svg'
       })
 
     //desktop version of the form
-    const logoutForm = 
+    const LogoutForm = () =>
         <form className='logout-form' method='POST' action='/api/logout'>
             <label>
                 {user.name}
@@ -33,24 +33,25 @@ import closeMenuIcon from '../images/icon-menu-close.svg'
         </form>
 
     //Opens the profile menu (mobile)
-    const menuBtn = 
+    const MenuButton = () => 
         <button className='side-menu-btn' onClick={() => setMenuOpen(true)}>
             <img src={userIcon} alt='open profile' />
         </button>
     //Closes the profile menu (mobile)
-    const closeMenuBtn = 
+    const CloseMenuButton = () => 
         <button className='side-menu-btn' onClick={() => setMenuOpen(false)}>
             <img src={closeMenuIcon} alt='close menu' />
         </button>
     //The profile menu (mobile)
-    const sideMenu = <div className='side-menu'>
-        <form className='logout-form' method='POST' action='/api/logout'>
-            <label>
-                {user.name}
-            </label>
-            <button className='btn btn-outline header-btn'>Logout</button>
-        </form>
-    </div>
+    const SideMenu = () =>
+        <div className='side-menu'>
+            <form className='logout-form' method='POST' action='/api/logout'>
+                <label>
+                    {user.name}
+                </label>
+                <button className='btn btn-outline header-btn'>Logout</button>
+            </form>
+        </div>
 
     return (
         <>
@@ -70,11 +71,11 @@ import closeMenuIcon from '../images/icon-menu-close.svg'
                 <button className='btn header-btn'>Search</button>
             </form>
             {/* Show desktop or the according mobile menu depending on screen width */}
-            {screenWidth <= 900 ? (menuOpen ? closeMenuBtn : menuBtn)  : logoutForm} 
+            {screenWidth <= 900 ? (menuOpen ? <CloseMenuButton /> : <MenuButton />)  : <LogoutForm />} 
             
         </header>
         {/* If the menu is open, show it */}
-        {menuOpen && sideMenu}
+        {menuOpen && <SideMenu />}
         <Outlet />
         </>
     )
