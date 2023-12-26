@@ -21,8 +21,7 @@ Universal API interface automatically fetches movie data depending on the movie 
   - [Installation](#installation)
 - [About the Project](#about-the-project)
   - [Built with](#built-with)
-  - [Project structure](#project-structure)
-  - [Why not RESTful?](#why-not-restful)
+  - [Project structure](#project-structure) <!-- - [Why not RESTful?](#why-not-restful) -->
   - [Continued development](#continued-development)
 - [My Process](#my-process)
     - [Inspiration](#inspiration)
@@ -260,11 +259,11 @@ exports.findOne = async (req, res) => {
 
 #### Here is an abstract diagram of the project configuration
 
-<img src="./demo/Your%20Movie%20Database%20structure.png" alt="diagram" width="500"/>
+<img src="./demo/Your%20Movie%20Database%20structure%20v2.png" alt="diagram" width="500"/>
 
-> **Note:** I refered to server-client communications as "REST API", when in fact it is not actually RESTful.
+<!-- > **Note:** I refered to server-client communications as "REST API", when in fact it is not actually RESTful. -->
 
-### Why not RESTful?
+<!-- ### Why not RESTful?
 Initially, one of my goals was to implement a REST API.
 After finishing the project I realize that the API I have implemented is not RESTful.
 <br />
@@ -272,7 +271,7 @@ The API I have implemented is not RESTful for two reasons:
 1. Displaying varying movie pages for different users (different descriptions) violates the uniformity principle of REST.
 2. Passport.js middleware counts as a server state (a REST server has to be stateless).
 
-So it is the **authentication** that breaks the REST principles. 
+So it is the **authentication** that breaks the REST principles.  -->
 
 ### Continued Development
 One feature that would make sense and would make a good challenge is adding the ability for a user to send friend requests to others and view their friend's movie lists.
