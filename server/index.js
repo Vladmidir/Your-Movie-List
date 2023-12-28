@@ -33,7 +33,7 @@ initializePassport(
     async id => await User.findByPk(id))
 
 app.use(session({ 
-    secret: "123", //CONFIGURE THIS PROPERLY with .env!
+    secret: process.env.SESSION_KEY, //CONFIGURE THIS PROPERLY with .env!
     resave: false,
     saveUninitialized: false
 }))
