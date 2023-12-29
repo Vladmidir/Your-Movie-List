@@ -64,7 +64,7 @@ exports.findTop50 = async (req, res) => {
 
   const url = "titles/"
   newOptions.url += url
-  newOptions.params.list = "most_pop_movies"
+  newOptions.params.list = "top_rated_english_250"
   newOptions.params.limit = "50"
   //fetch the data
   try {
@@ -146,7 +146,7 @@ exports.similar = async (req, res) => {
   newOptions.params.genre = req.query.genre
   newOptions.params.titleType = "movie"
   newOptions.params.limit = "3"
-  newOptions.params.list = "most_pop_movies"
+  newOptions.params.list = "top_rated_english_250"
 
   //fetch the data
   try {
