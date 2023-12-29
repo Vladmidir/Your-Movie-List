@@ -1,11 +1,20 @@
 const {Sequelize, Op, Model, DataTypes} = require('sequelize')
 
-//create an sqlite database
+//create an sqlite database (for development)
 const sequelize = new Sequelize({
     dialect: 'sqlite',
     storage: './server/database/database.sqlite',
     logging: false
 });
+
+//For AWS deployement
+// const sequelize = new Sequelize({
+//     dialect: "mariadb",
+//     host: "yourmovielistdb.clkigk46msmr.us-east-2.rds.amazonaws.com",
+//     port: 3036,
+//     username: "admin",
+//     password: process.env.DATABASE_KEY
+// })
 
 
 //create a db object we will export
