@@ -3,7 +3,7 @@ const express = require("express")
 const bcrypt = require("bcrypt")
 const passport = require("passport")
 const session = require("express-session")
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 80
 
 
 //create our app and our database
